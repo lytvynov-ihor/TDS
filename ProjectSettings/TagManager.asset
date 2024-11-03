@@ -9,6 +9,7 @@ TagManager:
   - Base
   - Ally
   - Enemy Base
+  - Path
   layers:
   - Default
   - TransparentFX

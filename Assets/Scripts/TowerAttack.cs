@@ -5,16 +5,16 @@ using UnityEngine.UI;
 
 public class TowerAttack : MonoBehaviour
 {
-    public Transform firePoint; // Point where the projectile is fired from
-    public float attackRange = 10f; // Attack range of the tower
-    public float rotationSpeed = 5f; // Rotation speed of the tower
-    public float fireCooldown = 1f; // Cooldown period between shots
+    public Transform firePoint;
+    public float attackRange = 10f;
+    public float rotationSpeed = 5f;
+    public float fireCooldown = 1f;
     public int towerDamage = 10;
     public Transform rangeOfAttack;
 
-    private Transform target; // Reference to the target enemy
-    private Quaternion startRotation; // Initial rotation of the tower
-    private float fireTimer; // Timer to track the time since the last shot
+    private Transform target;
+    private Quaternion startRotation;
+    private float fireTimer;
 
     void Start()
     {
@@ -29,17 +29,16 @@ public class TowerAttack : MonoBehaviour
         rangeOfAttack.localScale = new Vector3(attackRange * 5, attackRange * 5, 1f);
         if (target != null)
         {
-            RotateTowardsEnemy(); // Rotate the tower towards the enemy
+            RotateTowardsEnemy();
 
-            // Check if the tower can fire
             if (fireTimer >= fireCooldown)
             {
-                FireProjectile(); // Fire a projectile at the enemy
-                fireTimer = 0f; // Reset the fire timer
+                FireProjectile();
+                fireTimer = 0f;
             }
             else
             {
-                fireTimer += Time.deltaTime; // Increment the fire timer
+                fireTimer += Time.deltaTime;
             }
         }
         else
@@ -52,9 +51,9 @@ public class TowerAttack : MonoBehaviour
 
     void UpdateTarget()
     {
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy"); // Find all enemies with the tag "Enemy"
-        float shortestDistance = Mathf.Infinity; // Initialize the shortest distance to infinity
-        GameObject nearestEnemy = null; // Initialize the nearest enemy to null
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        float shortestDistance = Mathf.Infinity; //Initialize the shortest distance to infinity
+        GameObject nearestEnemy = null; //Initialize the nearest enemy to null
 
         foreach (GameObject enemy in enemies)
         {
@@ -68,21 +67,20 @@ public class TowerAttack : MonoBehaviour
 
         if (nearestEnemy != null)
         {
-            target = nearestEnemy.transform; // Set the target to the nearest enemy transform
+            target = nearestEnemy.transform; //Set the target to the nearest enemy transform
         }
         else
         {
-            target = null; // If no enemy found, set target to null
+            target = null; //If no enemy found - set target to null
         }
     }
 
-
     void RotateTowardsEnemy()
     {
-        Vector3 direction = (target.position - transform.position).normalized; // Calculate direction to the enemy
-        Quaternion lookRotation = Quaternion.LookRotation(direction); // Calculate the rotation to look at the enemy
+        Vector3 direction = (target.position - transform.position).normalized; //Calculate direction to the enemy
+        Quaternion lookRotation = Quaternion.LookRotation(direction); //Calculate the rotation to look at the enemy
 
-        // Smoothly rotate towards the enemy using Slerp
+        //Smoothly rotate towards the enemy using Slerp
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
     }
 
