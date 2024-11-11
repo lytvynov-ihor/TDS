@@ -83,7 +83,7 @@ public class TowerAttack : MonoBehaviour
         //Smoothly rotate towards the enemy using Slerp
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
     }
-
+    
     void FireProjectile()
     {
         RaycastHit hit;
