@@ -9,6 +9,7 @@ public class UpgradeStep
     public float rangeIncrease;
     public float speedDecrease;
     public int healthIncrease;
+    public int damageIncrease;
     public List<GameObject> modelUpgrades; 
 }
 
@@ -17,6 +18,7 @@ public class Tower : MonoBehaviour
     [SerializeField] public int healthPoints = 100;
     public Slider healthBar;
     public float maxHealth;
+    public string towerName;
 
     private TowerAttack towerAttack;
 
@@ -125,6 +127,8 @@ public class Tower : MonoBehaviour
             towerAttack.attackRange += upgradeStep.rangeIncrease;
         if (upgradeStep.speedDecrease > 0)
             towerAttack.fireCooldown -= upgradeStep.speedDecrease;
+        if (upgradeStep.damageIncrease > 0)
+            towerAttack.towerDamage += upgradeStep.damageIncrease;
         if (upgradeStep.healthIncrease > 0)
         {
             healthPoints += upgradeStep.healthIncrease;
