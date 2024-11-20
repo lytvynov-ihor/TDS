@@ -41,4 +41,11 @@ public class Money : MonoBehaviour
         currentCash += amount;
         UpdateCashUI();
     }
+
+    public void SellTower()
+    {
+        //Destroy(tower);
+        //IncreaseCash(tower.towerCost);
+        //fuck this shit bruh, we will have to add this later
+    }
 }

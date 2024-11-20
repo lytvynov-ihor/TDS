@@ -19,6 +19,7 @@ public class Tower : MonoBehaviour
     public Slider healthBar;
     public float maxHealth;
     public string towerName;
+    public int towerCost;
 
     private TowerAttack towerAttack;
 
@@ -123,11 +124,11 @@ public class Tower : MonoBehaviour
 
     private void ApplyUpgrade(UpgradeStep upgradeStep)
     {
-        if (upgradeStep.rangeIncrease > 0)
+        if (upgradeStep.rangeIncrease != null)
             towerAttack.attackRange += upgradeStep.rangeIncrease;
-        if (upgradeStep.speedDecrease > 0)
+        if (upgradeStep.speedDecrease != null)
             towerAttack.fireCooldown -= upgradeStep.speedDecrease;
-        if (upgradeStep.damageIncrease > 0)
+        if (upgradeStep.damageIncrease != null)
             towerAttack.towerDamage += upgradeStep.damageIncrease;
         if (upgradeStep.healthIncrease > 0)
         {
@@ -163,7 +164,7 @@ public class Tower : MonoBehaviour
 
     private bool CanUpgradeBottomPath()
     {
-        Debug.Log($"Checking CanUpgradeSpeed: rangeUpgrades = {topPathUpgrades}, speedUpgrades = {bottomPathUpgrades}");
+        Debug.Log($"Checking CanUpgradeSpeed: topPathUpgrades = {topPathUpgrades}, bottomPathUpgrades = {bottomPathUpgrades}");
 
         if (bottomPathUpgrades >= maxUpgrades)
             return false;
@@ -178,18 +179,18 @@ public class Tower : MonoBehaviour
     {
         if (topPathUpgrades == blockThreshold && bottomPathUpgrades < blockThreshold)
         {
-            Debug.Log("Speed upgrades are now blocked.");
+            Debug.Log("Top Path upgrades are now blocked.");
         }
 
         if (bottomPathUpgrades == blockThreshold && topPathUpgrades < blockThreshold)
         {
-            Debug.Log("Range upgrades are now blocked.");
+            Debug.Log("Bottom Path upgrades are now blocked.");
         }
     }
 
     public void DisplayUpgradeStatus()
     {
-        Debug.Log("Range upgrades: " + topPathUpgrades + "/" + maxUpgrades);
-        Debug.Log("Speed upgrades: " + bottomPathUpgrades + "/" + maxUpgrades);
+        Debug.Log("Top Path upgrades: " + topPathUpgrades + "/" + maxUpgrades);
+        Debug.Log("Bottom Path upgrades: " + bottomPathUpgrades + "/" + maxUpgrades);
     }
 }

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class TowerAttack : MonoBehaviour
 {
     public Transform firePoint;
-    public float attackRange = 10f;
+    public float attackRange = 20f;
     public float rotationSpeed = 5f;
     public float fireCooldown = 1f;
     public int towerDamage = 10;
@@ -20,13 +20,13 @@ public class TowerAttack : MonoBehaviour
     {
         startRotation = transform.rotation;//initial rotation of the tower
         fireTimer = fireCooldown;
-        InvokeRepeating("UpdateTarget", 0f, 0.5f);//update the target every 0.5 seconds 
-        rangeOfAttack.localScale = new Vector3(attackRange*5, attackRange*5, 1f);
+        InvokeRepeating("UpdateTarget", 0f, 0.05f);//update the target every N seconds 
+        rangeOfAttack.localScale = new Vector3(attackRange, attackRange, 3f);
     }
 
     void Update()
     {
-        rangeOfAttack.localScale = new Vector3(attackRange * 5, attackRange * 5, 1f);
+        rangeOfAttack.localScale = new Vector3(attackRange, attackRange, 3f);
         if (target != null)
         {
             RotateTowardsEnemy();
