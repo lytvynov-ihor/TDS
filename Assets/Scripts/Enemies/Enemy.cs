@@ -9,14 +9,36 @@ public class Enemy : MonoBehaviour
     public int damageToUnits = 5;
     public float attackRange = 3f;
 
-    private Transform targetBase; // Reference to the target base
+    public Transform path;
+    private List<Transform> waypoints = new List<Transform>();
+    private int currentWaypointIndex = 0;
+    private Transform targetBase;
 
     void Start()
     {
+        if (path != null)
+        {
+            foreach (Transform child in path)
+            {
+                waypoints.Add(child);
+            }
+        }
+        else
+        {
+            Debug.LogError("Path object not assigned to the enemy.");
+            return;
+        }
+
+        if (waypoints.Count == 0)
+        {
+            Debug.LogError("The Path object has no child objects to use as waypoints.");
+            return;
+        }
+
         GameObject baseObject = GameObject.FindGameObjectWithTag("Base");
         if (baseObject != null)
         {
-            targetBase = baseObject.transform; // Set the target base
+            targetBase = baseObject.transform;
         }
         else
         {
@@ -26,19 +48,34 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
-        if (targetBase != null)
+        if (waypoints.Count > 0)
         {
-            // Move towards the target base
+            MoveAlongPath();
+        }
+    }
+
+    void MoveAlongPath()
+    {
+        if (currentWaypointIndex < waypoints.Count)
+        {
+            Transform targetWaypoint = waypoints[currentWaypointIndex];
+            transform.position = Vector3.MoveTowards(transform.position, targetWaypoint.position, movementSpeed * Time.deltaTime);
+
+            if (Vector3.Distance(transform.position, targetWaypoint.position) < 0.1f)
+            {
+                currentWaypointIndex++;
+            }
+        }
+        else if (targetBase != null)
+        {
             transform.position = Vector3.MoveTowards(transform.position, targetBase.position, movementSpeed * Time.deltaTime);
         }
     }
 
     void OnCollisionEnter(Collision other)
     {
-        // Check if the enemy has collided with the base
         if (other.gameObject.tag == "Base")
         {
-            // Deal damage to the base
             BaseHealth baseHealth = other.gameObject.GetComponent<BaseHealth>();
             if (baseHealth != null)
             {
