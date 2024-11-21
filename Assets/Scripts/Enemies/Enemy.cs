@@ -88,4 +88,13 @@ public class Enemy : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    private void OnDestroy()
+    {
+        Spawner waveManager = FindObjectOfType<Spawner>();
+        if (waveManager != null)
+        {
+            waveManager.EnemyDestroyed();
+        }
+    }
 }

@@ -49,4 +49,9 @@ public class BaseHealth : MonoBehaviour
     {
         baseHealthText.text = "Health: " + currentHealth.ToString();
     }
+
+    public bool IsAlive()
+    {
+        return currentHealth > 0;
+    }
 }

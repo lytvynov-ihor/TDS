@@ -14,32 +14,34 @@ public class Spawner : MonoBehaviour
     public Transform spawnPoint;
     public float spawnInterval = 1f;
 
-    private int currentWaveIndex = 0;
+    public GameObject startWaveButton;
+    public GameObject player;
+
+    private int currentWaveIndex = -1;
     private int enemiesToSpawn = 0;
     private int enemiesRemaining = 0;
 
     void Start()
     {
-        StartWave();
+        if (startWaveButton != null)
+            startWaveButton.SetActive(true);
     }
 
     void StartWave()
     {
         if (currentWaveIndex >= waves.Length)
         {
-            Debug.Log("all waves completed");
+            Debug.Log("All waves completed!");
             return;
         }
 
-        Debug.Log($"Starting Wave {currentWaveIndex + 1}");
-        enemiesToSpawn = waves[currentWaveIndex].enemies.Length;
-        enemiesRemaining = enemiesToSpawn;
+        enemiesRemaining = waves[currentWaveIndex].enemies.Length;
         StartCoroutine(SpawnWave());
     }
 
     IEnumerator SpawnWave()
     {
-        for (int i = 0; i < enemiesToSpawn; i++)
+        for (int i = 0; i < waves[currentWaveIndex].enemies.Length; i++)
         {
             SpawnEnemy(waves[currentWaveIndex].enemies[i]);
             yield return new WaitForSeconds(spawnInterval);
@@ -56,8 +58,34 @@ public class Spawner : MonoBehaviour
         enemiesRemaining--;
         if (enemiesRemaining <= 0)
         {
-            currentWaveIndex++;
-            StartWave();
+            ShowStartWaveButtonIfPlayerAlive();
+        }
+    }
+
+    void ShowStartWaveButtonIfPlayerAlive()
+    {
+        if (player != null)
+        {
+            BaseHealth health = player.GetComponent<BaseHealth>();
+            if (health != null && health.IsAlive())
+            {
+                if (startWaveButton != null)
+                    startWaveButton.SetActive(true);
+            }
+        }
+    }
+
+    public void OnStartNextWaveButtonPressed()
+    {
+        if (player != null)
+        {
+            BaseHealth health = player.GetComponent<BaseHealth>();
+            if (health != null && health.IsAlive())
+            {
+                startWaveButton.SetActive(false);
+                currentWaveIndex++;
+                StartWave();
+            }
         }
     }
 }
