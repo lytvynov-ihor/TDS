@@ -2,11 +2,10 @@ using UnityEngine;
 
 public class TowerInteraction : MonoBehaviour
 {
-    private Tower tower; // Reference to the Tower component
+    private Tower tower;
 
     void Update()
     {
-        // Check for mouse click
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -14,13 +13,11 @@ public class TowerInteraction : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit))
             {
-                // Check if the clicked object is a tower
                 if (hit.collider.CompareTag("Tower"))
                 {
-                    // Get the Tower component from the clicked object
+                    Debug.Log(hit.collider.name);
                     tower = hit.collider.GetComponent<Tower>();
                          
-                    // Enable/disable the SpriteRenderer of the child object
                     if (tower != null)
                     {
                         SpriteRenderer[] renderers = tower.GetComponentsInChildren<SpriteRenderer>();
@@ -29,7 +26,7 @@ public class TowerInteraction : MonoBehaviour
                         {
                             foreach(Renderer r in renderers)
                             {
-                                r.enabled = !r.enabled; // Toggle the visibility
+                                r.enabled = !r.enabled;
                             }
                         }
                         if (canvas != null)
@@ -39,7 +36,6 @@ public class TowerInteraction : MonoBehaviour
                     }
                     else
                     {
-                        Debug.Log(hit.collider.name);
                         return;
                     }
                 }

@@ -12,6 +12,12 @@ public class UnitManager : MonoBehaviour
     private Quaternion baseRotation;
     private Money money;
     private int unitsSpawned;
+    
+    /*
+     
+    A completely fucking useless script, MIGHT(perhaps, I hope, maybe) be used in the future 
+
+     */
 
     // Start is called before the first frame update
     void Start()
@@ -26,27 +32,5 @@ public class UnitManager : MonoBehaviour
     void Update()
     {
 
-    }
-
-    public void SpawnUnit1()
-    {
-        if (unitList.Count > 0)
-        {
-            int unitPrice = unitList[0].unitPrice;
-            if (money != null && money.currentCash >= unitPrice && unitsSpawned < unitLimit)
-            {
-                Instantiate(unitList[0], basePosition, baseRotation);
-                money.DeductCash(unitPrice);
-                unitsSpawned++;
-            }
-            else
-            {
-                Debug.LogWarning("Not enough cash or free space to spawn the unit.");
-            }
-        }
-        else
-        {
-            Debug.LogWarning("No units available to spawn.");
-        }
     }
 }

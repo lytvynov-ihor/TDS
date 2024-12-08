@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 8088952246797262851}
   - component: {fileID: 8088952246797262973}
   - component: {fileID: 8088952246797262972}
-  - component: {fileID: 1612645950}
+  - component: {fileID: 2171549597453583655}
+  - component: {fileID: 1548365845943686520}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -77,19 +78,70 @@ MonoBehaviour:
   startingCash: 500
   cashText: {fileID: 0}
   currentCash: 0
---- !u!114 &1612645950
+--- !u!114 &2171549597453583655
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8088952246797262848}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f17e5bebd660714b8d0c08405b712e3, type: 3}
+  m_Script: {fileID: 11500000, guid: f6fc148e80931a74382a4904dc8a3e2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitList:
-  - {fileID: 297930877470968313, guid: 038a2a2c47ed211439e72a4e97ebc6f2, type: 3}
-  spawnPosition: {fileID: 0}
-  unitLimit: 5
+  menuImg: {fileID: 0}
+--- !u!114 &1548365845943686520
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8088952246797262848}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d35c601c5a35e7f429c92e4fcac4450f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waves:
+  - enemies:
+    - {fileID: 137529608538164736, guid: 236685fc7af669940b5a6fea1af12dfe, type: 3}
+    - {fileID: 137529608538164736, guid: 236685fc7af669940b5a6fea1af12dfe, type: 3}
+    - {fileID: 137529608538164736, guid: 236685fc7af669940b5a6fea1af12dfe, type: 3}
+    - {fileID: 137529608538164736, guid: 236685fc7af669940b5a6fea1af12dfe, type: 3}
+    - {fileID: 137529608538164736, guid: 236685fc7af669940b5a6fea1af12dfe, type: 3}
+  - enemies:
+    - {fileID: 137529608538164736, guid: 236685fc7af669940b5a6fea1af12dfe, type: 3}
+    - {fileID: 137529608538164736, guid: 236685fc7af669940b5a6fea1af12dfe, type: 3}
+    - {fileID: 137529608538164736, guid: 236685fc7af669940b5a6fea1af12dfe, type: 3}
+    - {fileID: 137529608538164736, guid: 236685fc7af669940b5a6fea1af12dfe, type: 3}
+    - {fileID: 137529608538164736, guid: 236685fc7af669940b5a6fea1af12dfe, type: 3}
+    - {fileID: 137529608538164736, guid: 236685fc7af669940b5a6fea1af12dfe, type: 3}
+    - {fileID: 137529608538164736, guid: 236685fc7af669940b5a6fea1af12dfe, type: 3}
+    - {fileID: 137529608538164736, guid: 236685fc7af669940b5a6fea1af12dfe, type: 3}
+  - enemies:
+    - {fileID: 137529608538164736, guid: 236685fc7af669940b5a6fea1af12dfe, type: 3}
+    - {fileID: 137529608538164736, guid: 236685fc7af669940b5a6fea1af12dfe, type: 3}
+    - {fileID: 137529608538164736, guid: 236685fc7af669940b5a6fea1af12dfe, type: 3}
+    - {fileID: 137529608538164736, guid: 236685fc7af669940b5a6fea1af12dfe, type: 3}
+    - {fileID: 137529608538164736, guid: 236685fc7af669940b5a6fea1af12dfe, type: 3}
+    - {fileID: 137529608538164736, guid: 236685fc7af669940b5a6fea1af12dfe, type: 3}
+    - {fileID: 137529608538164736, guid: ac4f4746d922d13448467aec2e23b5b4, type: 3}
+    - {fileID: 137529608538164736, guid: ac4f4746d922d13448467aec2e23b5b4, type: 3}
+    - {fileID: 137529608538164736, guid: ac4f4746d922d13448467aec2e23b5b4, type: 3}
+    - {fileID: 137529608538164736, guid: ac4f4746d922d13448467aec2e23b5b4, type: 3}
+  - enemies:
+    - {fileID: 137529608538164736, guid: ac4f4746d922d13448467aec2e23b5b4, type: 3}
+    - {fileID: 137529608538164736, guid: ac4f4746d922d13448467aec2e23b5b4, type: 3}
+    - {fileID: 137529608538164736, guid: ac4f4746d922d13448467aec2e23b5b4, type: 3}
+    - {fileID: 137529608538164736, guid: ac4f4746d922d13448467aec2e23b5b4, type: 3}
+    - {fileID: 137529608538164736, guid: ac4f4746d922d13448467aec2e23b5b4, type: 3}
+    - {fileID: 137529608538164736, guid: ac4f4746d922d13448467aec2e23b5b4, type: 3}
+    - {fileID: 137529608538164736, guid: ac4f4746d922d13448467aec2e23b5b4, type: 3}
+    - {fileID: 137529608538164736, guid: ac4f4746d922d13448467aec2e23b5b4, type: 3}
+    - {fileID: 137529608538164736, guid: ac4f4746d922d13448467aec2e23b5b4, type: 3}
+    - {fileID: 137529608538164736, guid: ac4f4746d922d13448467aec2e23b5b4, type: 3}
+  spawnPoint: {fileID: 0}
+  spawnInterval: 1.5
+  startWaveButton: {fileID: 0}
+  player: {fileID: 0}

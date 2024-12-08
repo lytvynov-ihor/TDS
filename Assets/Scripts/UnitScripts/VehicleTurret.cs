@@ -1,16 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Tank : MonoBehaviour
+public class VehicleTurret : MonoBehaviour
 {
-    public Transform turret; // Assign in inspector
+    //public Transform turret;
     public float rotationSpeed = 5f;
     public float fireRate = 1f;
-    public Transform firePoint; // Assign in inspector (point from where the beam will be fired)
+    public Transform firePoint;
     public int damage = 20;
     public float range = 100f;
-    public GameObject projectilePrefab;
+    //public GameObject projectilePrefab;
 
     private float nextFireTime;
 
@@ -53,22 +51,16 @@ public class Tank : MonoBehaviour
 
     void AimTurret(Transform target)
     {
-        Vector3 direction = target.position - turret.position;
-        direction.y = 0; // Ignore the vertical component to constrain rotation around the Y-axis
+        Vector3 direction = target.position - transform.position;
+        direction.y = 0;
         Quaternion targetRotation = Quaternion.LookRotation(direction);
 
-        // Adjust the rotation to account for the base Y rotation of 90 degrees
-        targetRotation *= Quaternion.Euler(0, 90, 0);
-
-        turret.rotation = Quaternion.Slerp(turret.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-
-        // Ensure the turret rotates only around the Y-axis
-        turret.localEulerAngles = new Vector3(0, turret.localEulerAngles.y, 0);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+        transform.localEulerAngles = new Vector3(0, 0, transform.localEulerAngles.z);
     }
 
     void FireBeam()
     {
-        // Perform the raycast
         RaycastHit hit;
         Vector3 forward = firePoint.TransformDirection(Vector3.forward) * range;
         Debug.DrawRay(firePoint.position, forward, Color.red, 5.0f);
