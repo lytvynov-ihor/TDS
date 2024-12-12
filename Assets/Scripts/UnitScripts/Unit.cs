@@ -5,10 +5,7 @@ using UnityEngine;
 public class Unit : MonoBehaviour
 {
     public float movementSpeed = 5f;
-    public int damageToBase = 300;
-    public int damageToUnits = 5;
-    public float attackRange = 3f;
-    public int unitHealth = 120;
+    public int unitHealth = 100;
 
     public Transform path;
     private int currentHealth;
@@ -88,7 +85,7 @@ public class Unit : MonoBehaviour
         }
     }
 
-    void OnCollisionEnter(Collision other)
+    void OnTriggerEnter(Collider other)
     {
         Debug.Log(nameof(other));
         if (other.gameObject.tag == "Enemy")
@@ -98,7 +95,7 @@ public class Unit : MonoBehaviour
             if (enemyHealth != null)
             {
                 TakeDamage(enemyStuff.damageToUnits);
-                enemyHealth.TakeDamage(damageToBase);
+                enemyHealth.TakeDamage(currentHealth);
             }
             else
             {

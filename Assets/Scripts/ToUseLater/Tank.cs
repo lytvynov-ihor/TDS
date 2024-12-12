@@ -10,7 +10,6 @@ public class Tank : MonoBehaviour
     public Transform firePoint; // Assign in inspector (point from where the beam will be fired)
     public int damage = 20;
     public float range = 100f;
-    public GameObject projectilePrefab;
 
     private float nextFireTime;
 

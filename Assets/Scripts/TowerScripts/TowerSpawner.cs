@@ -9,15 +9,16 @@ public class UpgradeSpawnStep
     public int healthIncrease;
     public float intervalDecrease;
     public List<GameObject> modelUpgrades;
+    //public List<GameObject> additionalUnits;
 }
 
 [System.Serializable]
-    public class UnitSpawnInfo
-    {
-        public GameObject unitPrefab;
-        public float spawnInterval;
-        [HideInInspector] public float nextSpawnTime;
-    }
+public class UnitSpawnInfo
+{
+    public GameObject unitPrefab;
+    public float spawnInterval;
+    [HideInInspector] public float nextSpawnTime;
+}
 
 public class TowerSpawner : MonoBehaviour
 {
@@ -25,9 +26,8 @@ public class TowerSpawner : MonoBehaviour
     [SerializeField] public int healthPoints = 450;
     public Transform spawnPoint;
     public Slider healthBar;
-    //public float spawnInterval = 10f;
     public float maxHealth;
-    public int towerCost;//need to make Money System actually work and not ju   st exist
+    public int towerCost;
 
     private int topPathUpgrades = 0;
     private int bottomPathUpgrades = 0;
@@ -98,6 +98,19 @@ public class TowerSpawner : MonoBehaviour
         }
     }
 
+    /* not working yet, WIP
+    void AddNewUnit(GameObject unitPrefab, float spawnCooldown)
+    {
+        unitSpawnList.Add(new UnitSpawnInfo
+        {
+            unitPrefab = unitPrefab,
+            spawnInterval = spawnCooldown,
+            nextSpawnTime = Time.time + spawnCooldown // Ensures the initial cooldown is applied
+        });
+        Debug.Log($"Added unit: {unitPrefab.name} with a cooldown of {spawnCooldown} seconds.");
+    }
+    */
+
     void SpawnUnit(UnitSpawnInfo unit)
     {
         if (unit.unitPrefab != null && spawnPoint != null)
@@ -116,7 +129,6 @@ public class TowerSpawner : MonoBehaviour
                 topPathUpgrades++;
                 CheckBlockingCondition();
                 Debug.Log("Top path upgraded to level " + topPathUpgrades);
-
             }
             else
             {
@@ -153,13 +165,14 @@ public class TowerSpawner : MonoBehaviour
 
     private void ApplyUpgrade(UpgradeSpawnStep upgradeStep)
     {
-
-        if (upgradeStep.intervalDecrease != null)
+        if (upgradeStep.intervalDecrease != 0)
+        {
             foreach (var unit in unitSpawnList)
             {
                 unit.spawnInterval -= upgradeStep.intervalDecrease;
                 Debug.Log(unit.spawnInterval + " spawn interval; ");
             }
+        }
 
         if (upgradeStep.healthIncrease > 0)
         {
@@ -179,6 +192,22 @@ public class TowerSpawner : MonoBehaviour
                 Debug.LogWarning("Model upgrade is null and cannot be activated.");
             }
         }
+
+        /* not working yet
+        //add new units to the spawn list
+        foreach (var unit in upgradeStep.additionalUnits)
+        {
+            if (unit != null)
+            {
+                unitSpawnList.Add(new UnitSpawnInfo
+                {
+                    unitPrefab = unit,
+                    spawnInterval = 10f // Default interval; adjust as needed
+                });
+                Debug.Log($"Added unit: {unit.name} to spawn list.");
+            }
+        }
+        */
     }
 
     private bool CanUpgradeTopPath()
