@@ -10,7 +10,8 @@ public class UpgradeStep
     public float speedDecrease;
     public int healthIncrease;
     public int damageIncrease;
-    public List<GameObject> modelUpgrades; 
+    public List<GameObject> modelUpgrades;
+    public List<GameObject> modelToHide;
 }
 
 public class Tower : MonoBehaviour
@@ -45,11 +46,25 @@ public class Tower : MonoBehaviour
                     model.SetActive(false);
                 }
             }
+            foreach (GameObject model in step.modelToHide)
+            {
+                if (model != null)
+                {
+                    model.SetActive(false);
+                }
+            }
         }
 
         foreach (UpgradeStep step in bottomPathUpgradeSteps)
         {
             foreach (GameObject model in step.modelUpgrades)
+            {
+                if (model != null)
+                {
+                    model.SetActive(false);
+                }
+            }
+            foreach (GameObject model in step.modelToHide)
             {
                 if (model != null)
                 {
@@ -141,6 +156,19 @@ public class Tower : MonoBehaviour
             if (model != null)  // Ensure the model is assigned
             {
                 model.SetActive(true);
+                Debug.Log($"Activated model: {model.name}");
+            }
+            else
+            {
+                Debug.LogWarning("Model upgrade is null and cannot be activated.");
+            }
+        }
+
+        foreach (GameObject model in upgradeStep.modelToHide)
+        {
+            if (model != null)  // Ensure the model is assigned
+            {
+                model.SetActive(false);
                 Debug.Log($"Activated model: {model.name}");
             }
             else
