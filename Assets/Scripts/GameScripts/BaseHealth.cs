@@ -50,7 +50,7 @@ public class BaseHealth : MonoBehaviour
         baseHealthText.text = "Health: " + currentHealth.ToString();
     }
 
-    public bool IsAlive()
+    public bool healthPositive()
     {
         return currentHealth > 0;
     }
