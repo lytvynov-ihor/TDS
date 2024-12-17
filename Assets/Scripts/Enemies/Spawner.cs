@@ -18,10 +18,12 @@ public class Spawner : MonoBehaviour
 
     public GameObject startWaveButton;
     public GameObject player;
+    private GameObject[] cashFarms;
     public AdvisorScript advisor; // Reference to the Advisor script
 
     private int currentWaveIndex = -1;
     private int enemiesRemaining = 0;
+    private bool isWaveActive = false;
 
     void Start()
     {
@@ -43,6 +45,7 @@ public class Spawner : MonoBehaviour
             advisor.ShowAdvisor(waves[currentWaveIndex].advisorMessage);
         }
 
+        isWaveActive = true;
         enemiesRemaining = waves[currentWaveIndex].enemies.Length;
         StartCoroutine(SpawnWave());
     }
@@ -66,6 +69,7 @@ public class Spawner : MonoBehaviour
         enemiesRemaining--;
         if (enemiesRemaining <= 0)
         {
+            isWaveActive = false;
             ShowStartWaveButtonIfPlayerAlive();
         }
     }
@@ -75,10 +79,20 @@ public class Spawner : MonoBehaviour
         if (player != null)
         {
             BaseHealth health = player.GetComponent<BaseHealth>();
-            if (health != null && health.IsAlive())
+            cashFarms = GameObject.FindGameObjectsWithTag("CashFarm");
+
+            if (health != null && health.healthPositive())
             {
                 if (startWaveButton != null)
                     startWaveButton.SetActive(true);
+                if (cashFarms.Length != 0)
+                {
+                    for (int i = 0; i < cashFarms.Length; i++)
+                    {
+                        CoinFarmScript t = cashFarms[i].GetComponent<CoinFarmScript>();
+                        t.wasCashCollected = false;
+                    }
+                }
             }
         }
     }
@@ -88,12 +102,17 @@ public class Spawner : MonoBehaviour
         if (player != null)
         {
             BaseHealth health = player.GetComponent<BaseHealth>();
-            if (health != null && health.IsAlive())
+            if (health != null && health.healthPositive())
             {
                 startWaveButton.SetActive(false);
                 currentWaveIndex++;
                 StartWave();
             }
         }
+    }
+
+    public bool IsWaveActive()
+    {
+        return isWaveActive; // Getter for isWaveActive
     }
 }

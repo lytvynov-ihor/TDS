@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 1548365845943686520}
   m_Layer: 0
   m_Name: GameManager
-  m_TagString: Untagged
+  m_TagString: GameManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -110,6 +110,8 @@ MonoBehaviour:
     - {fileID: 137529608538164736, guid: 236685fc7af669940b5a6fea1af12dfe, type: 3}
     - {fileID: 137529608538164736, guid: 236685fc7af669940b5a6fea1af12dfe, type: 3}
     - {fileID: 137529608538164736, guid: 236685fc7af669940b5a6fea1af12dfe, type: 3}
+    advisorMessage: Got a life? If no, goodluck
+    advisorDuration: 8
   - enemies:
     - {fileID: 137529608538164736, guid: 236685fc7af669940b5a6fea1af12dfe, type: 3}
     - {fileID: 137529608538164736, guid: 236685fc7af669940b5a6fea1af12dfe, type: 3}
@@ -119,6 +121,8 @@ MonoBehaviour:
     - {fileID: 137529608538164736, guid: 236685fc7af669940b5a6fea1af12dfe, type: 3}
     - {fileID: 137529608538164736, guid: 236685fc7af669940b5a6fea1af12dfe, type: 3}
     - {fileID: 137529608538164736, guid: 236685fc7af669940b5a6fea1af12dfe, type: 3}
+    advisorMessage: Managed to get a life? No? Keep it up, maggot.
+    advisorDuration: 6
   - enemies:
     - {fileID: 137529608538164736, guid: 236685fc7af669940b5a6fea1af12dfe, type: 3}
     - {fileID: 137529608538164736, guid: 236685fc7af669940b5a6fea1af12dfe, type: 3}
@@ -130,6 +134,9 @@ MonoBehaviour:
     - {fileID: 137529608538164736, guid: ac4f4746d922d13448467aec2e23b5b4, type: 3}
     - {fileID: 137529608538164736, guid: ac4f4746d922d13448467aec2e23b5b4, type: 3}
     - {fileID: 137529608538164736, guid: ac4f4746d922d13448467aec2e23b5b4, type: 3}
+    advisorMessage: That is not so sigma of you- Wait a moment, that's the wrong
+      script- *awkward silence*
+    advisorDuration: 0
   - enemies:
     - {fileID: 137529608538164736, guid: ac4f4746d922d13448467aec2e23b5b4, type: 3}
     - {fileID: 137529608538164736, guid: ac4f4746d922d13448467aec2e23b5b4, type: 3}
@@ -141,7 +148,10 @@ MonoBehaviour:
     - {fileID: 137529608538164736, guid: ac4f4746d922d13448467aec2e23b5b4, type: 3}
     - {fileID: 137529608538164736, guid: ac4f4746d922d13448467aec2e23b5b4, type: 3}
     - {fileID: 137529608538164736, guid: ac4f4746d922d13448467aec2e23b5b4, type: 3}
+    advisorMessage: Finally got a life! Congrats!
+    advisorDuration: 10
   spawnPoint: {fileID: 0}
   spawnInterval: 1.5
   startWaveButton: {fileID: 0}
   player: {fileID: 0}
+  advisor: {fileID: 0}
