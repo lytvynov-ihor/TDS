@@ -8,6 +8,8 @@ public class Spawner : MonoBehaviour
     public class Wave
     {
         public GameObject[] enemies;
+        public string advisorMessage; // New field for Advisor messages
+        public float advisorDuration = 10f; // How long the advisor message stays
     }
 
     public Wave[] waves;
@@ -16,9 +18,9 @@ public class Spawner : MonoBehaviour
 
     public GameObject startWaveButton;
     public GameObject player;
+    public AdvisorScript advisor; // Reference to the Advisor script
 
     private int currentWaveIndex = -1;
-    private int enemiesToSpawn = 0;
     private int enemiesRemaining = 0;
 
     void Start()
@@ -33,6 +35,12 @@ public class Spawner : MonoBehaviour
         {
             Debug.Log("All waves completed!");
             return;
+        }
+
+        // Display the Advisor message if one is provided for this wave
+        if (!string.IsNullOrEmpty(waves[currentWaveIndex].advisorMessage))
+        {
+            advisor.ShowAdvisor(waves[currentWaveIndex].advisorMessage);
         }
 
         enemiesRemaining = waves[currentWaveIndex].enemies.Length;

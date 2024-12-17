@@ -72,7 +72,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    void OnCollisionEnter(Collision other)
+    void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Base")
         {
