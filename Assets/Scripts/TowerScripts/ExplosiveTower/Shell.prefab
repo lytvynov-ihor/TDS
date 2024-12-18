@@ -101,7 +101,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   curve: {fileID: 0}
-  speed: 1
+  attackDamage: 50
+  speed: 1.5
 --- !u!136 &8753965110489337510
 CapsuleCollider:
   m_ObjectHideFlags: 0

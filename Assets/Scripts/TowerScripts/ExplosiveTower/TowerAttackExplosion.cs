@@ -97,29 +97,8 @@ public class TowerAttackExplosion : MonoBehaviour
         trajectory.control = control.transform;
         QuadraticCurve newTrajectory = Instantiate(trajectory,firePoint.position,Quaternion.identity);
         shell.curve = newTrajectory;
+        shell.attackDamage = towerDamage;
         Instantiate(shell,firePoint.position,Quaternion.identity);
-        // RaycastHit hit;
-        // Vector3 forward = firePoint.TransformDirection(Vector3.forward) * attackRange;
-        // Debug.DrawRay(firePoint.position, forward, Color.red, 5.0f);
-        //
-        // if (Physics.Raycast(firePoint.position, firePoint.forward, out hit, attackRange))
-        // {
-        //     Collider[] colliders = Physics.OverlapSphere(hit.transform.position, 5f);
-        //     foreach (Collider c in colliders)
-        //     {
-        //         if (c.CompareTag("Enemy"))
-        //         {
-        //             EnemyHealth health = c.GetComponent<EnemyHealth>();
-        //             if (health != null)
-        //             {
-        //                 health.TakeDamage(towerDamage);
-        //             }
-        //         }
-        //     }
-        // }
-        // else
-        // {
-        //     return;
-        // }
+        
     }
 }
