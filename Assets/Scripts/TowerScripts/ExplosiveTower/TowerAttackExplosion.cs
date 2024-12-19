@@ -10,6 +10,7 @@ public class TowerAttackExplosion : MonoBehaviour
     public float rotationSpeed = 5f;
     public float fireCooldown = 1f;
     public int towerDamage = 50;
+    public GameObject towerModel;
     public Transform rangeOfAttack;
 
     public Transform target;
@@ -84,6 +85,7 @@ public class TowerAttackExplosion : MonoBehaviour
 
         //Smoothly rotate towards the enemy using Slerp
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
+        towerModel.transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
     }
     
     void FireProjectile()
@@ -91,7 +93,7 @@ public class TowerAttackExplosion : MonoBehaviour
         GameObject control = new GameObject("Control");
         GameObject enemyPos = new GameObject("EnemyPos");
         enemyPos.transform.position=target.transform.position;
-        control.transform.position = firePoint.position + new Vector3(0f,40f,0f);
+        control.transform.position = firePoint.position + new Vector3(0f,20f,0f);
         trajectory.a = firePoint;
         trajectory.b = enemyPos.transform;
         trajectory.control = control.transform;
