@@ -83,9 +83,11 @@ public class TowerAttackExplosion : MonoBehaviour
         Vector3 direction = (target.position - transform.position).normalized; //Calculate direction to the enemy
         Quaternion lookRotation = Quaternion.LookRotation(direction); //Calculate the rotation to look at the enemy
 
-        //Smoothly rotate towards the enemy using Slerp
+        
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
         towerModel.transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
+        
+        RotateFirePoint(direction,3f);
     }
     
     void FireProjectile()
@@ -93,7 +95,7 @@ public class TowerAttackExplosion : MonoBehaviour
         GameObject control = new GameObject("Control");
         GameObject enemyPos = new GameObject("EnemyPos");
         enemyPos.transform.position=target.transform.position;
-        control.transform.position = firePoint.position + new Vector3(0f,20f,0f);
+        control.transform.position = firePoint.position + new Vector3(0f,15f,0f);
         trajectory.a = firePoint;
         trajectory.b = enemyPos.transform;
         trajectory.control = control.transform;
@@ -102,5 +104,18 @@ public class TowerAttackExplosion : MonoBehaviour
         shell.attackDamage = towerDamage;
         Instantiate(shell,firePoint.position,Quaternion.identity);
         
+    }
+
+    void RotateFirePoint(Vector3 enemyPos,float radius)
+    {
+        float targetAngleInRadians = Mathf.Atan2(enemyPos.z, enemyPos.x);
+
+        float targetAngle = 0f;
+        targetAngle = Mathf.LerpAngle(targetAngle, targetAngleInRadians, Time.deltaTime * rotationSpeed);
+        
+        float x = towerModel.transform.position.x + Mathf.Cos(targetAngleInRadians) * 3f;
+        float z = towerModel.transform.position.z + Mathf.Sin(targetAngleInRadians) * 3f;
+        
+        firePoint.transform.position = new Vector3(x, firePoint.transform.position.y, z);
     }
 }
