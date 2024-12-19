@@ -103,6 +103,7 @@ MonoBehaviour:
   curve: {fileID: 0}
   attackDamage: 50
   speed: 1.5
+  particle: {fileID: 6470170726573043807, guid: 9777a9e2807d4ef408927dcc6159962a, type: 3}
 --- !u!136 &8753965110489337510
 CapsuleCollider:
   m_ObjectHideFlags: 0

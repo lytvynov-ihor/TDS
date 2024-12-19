@@ -5474,6 +5474,7 @@ MonoBehaviour:
   curve: {fileID: 147339752}
   attackDamage: 0
   speed: 0.025
+  particle: {fileID: 0}
 --- !u!136 &641884865
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -34662,6 +34663,67 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5594924770989351351}
   m_Mesh: {fileID: -4377015991440438705, guid: f9dde72ac2941f54c83350ca14ac09f1, type: 3}
+--- !u!1001 &6979627876838971388
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2255821233115690007, guid: 9777a9e2807d4ef408927dcc6159962a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 37.74436
+      objectReference: {fileID: 0}
+    - target: {fileID: 2255821233115690007, guid: 9777a9e2807d4ef408927dcc6159962a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -12.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2255821233115690007, guid: 9777a9e2807d4ef408927dcc6159962a, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 19.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2255821233115690007, guid: 9777a9e2807d4ef408927dcc6159962a, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 2255821233115690007, guid: 9777a9e2807d4ef408927dcc6159962a, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 2255821233115690007, guid: 9777a9e2807d4ef408927dcc6159962a, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2255821233115690007, guid: 9777a9e2807d4ef408927dcc6159962a, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2255821233115690007, guid: 9777a9e2807d4ef408927dcc6159962a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 2255821233115690007, guid: 9777a9e2807d4ef408927dcc6159962a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2255821233115690007, guid: 9777a9e2807d4ef408927dcc6159962a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4649583635633173644, guid: 9777a9e2807d4ef408927dcc6159962a, type: 3}
+      propertyPath: m_Name
+      value: Explosion
+      objectReference: {fileID: 0}
+    - target: {fileID: 4649583635633173644, guid: 9777a9e2807d4ef408927dcc6159962a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 9777a9e2807d4ef408927dcc6159962a, type: 3}
 --- !u!23 &6990932598504636293
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -39693,3 +39755,4 @@ SceneRoots:
   - {fileID: 6441983974526093224}
   - {fileID: 771591799901716846}
   - {fileID: 1650111796}
+  - {fileID: 6979627876838971388}

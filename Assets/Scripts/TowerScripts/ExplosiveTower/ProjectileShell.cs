@@ -7,6 +7,7 @@ public class ProjectileShell : MonoBehaviour
 public QuadraticCurve curve;
 public int attackDamage;
 public float speed;
+public ParticleSystem particle;
 
 private float sampleTime;
 
@@ -28,6 +29,7 @@ void Update()
 
     if (sampleTime >= 1f)
     {
+        Instantiate(particle, transform.position, Quaternion.identity);
         Collider[] colliders = Physics.OverlapSphere(transform.position, 5f);
         foreach (Collider c in colliders)
         {
