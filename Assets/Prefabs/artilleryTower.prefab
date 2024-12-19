@@ -596,7 +596,7 @@ MonoBehaviour:
   healthBar: {fileID: 0}
   maxHealth: 0
   towerName: 
-  towerCost: 0
+  towerCost: 300
   topPathUpgradeSteps: []
   bottomPathUpgradeSteps: []
 --- !u!1 &808173041814971940

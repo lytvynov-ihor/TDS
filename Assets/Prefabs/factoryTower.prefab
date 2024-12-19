@@ -3403,10 +3403,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61c4e677380958e4fb8f15ac4a786af7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthPoints: 100
+  healthPoints: 150
   healthBar: {fileID: 0}
   maxHealth: 0
   towerName: 
-  towerCost: 0
+  towerCost: 150
   topPathUpgradeSteps: []
   bottomPathUpgradeSteps: []

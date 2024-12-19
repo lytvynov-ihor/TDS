@@ -3319,7 +3319,7 @@ MonoBehaviour:
   healthBar: {fileID: 0}
   maxHealth: 0
   towerName: 
-  towerCost: 0
+  towerCost: 50
   topPathUpgradeSteps: []
   bottomPathUpgradeSteps: []
 --- !u!1 &1960815926795201028
@@ -7251,7 +7251,7 @@ MonoBehaviour:
   healthBar: {fileID: 4881394613907949399}
   maxHealth: 0
   towerName: '"T-RX" Turret'
-  towerCost: 0
+  towerCost: 50
   topPathUpgradeSteps:
   - rangeIncrease: 5
     speedDecrease: 0

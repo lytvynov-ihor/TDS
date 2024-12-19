@@ -45,6 +45,7 @@ GameObject:
   - component: {fileID: 5480508459334204690}
   - component: {fileID: 4013790741389970209}
   - component: {fileID: 6064828860310440059}
+  - component: {fileID: 2121888222892440304}
   m_Layer: 0
   m_Name: CashFarm
   m_TagString: CashFarm
@@ -62,7 +63,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -64.87066, y: 8.228976, z: 8.47595}
-  m_LocalScale: {x: 0.7808, y: 0.7808, z: 0.7808}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1106623181452820415}
@@ -80,7 +81,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 195912d3137e6a14ea8054c119256438, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cashAmount: 100
+  cashAmount: 300
   wasCashCollected: 0
 --- !u!65 &6064828860310440059
 BoxCollider:
@@ -103,6 +104,25 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 8.705624, y: 1, z: 8.912111}
   m_Center: {x: -0.012155533, y: 0, z: 0.061797857}
+--- !u!114 &2121888222892440304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4280104352654668396}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61c4e677380958e4fb8f15ac4a786af7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthPoints: 100
+  healthBar: {fileID: 0}
+  maxHealth: 0
+  towerName: 
+  towerCost: 300
+  topPathUpgradeSteps: []
+  bottomPathUpgradeSteps: []
 --- !u!1 &6315301564371810752
 GameObject:
   m_ObjectHideFlags: 0

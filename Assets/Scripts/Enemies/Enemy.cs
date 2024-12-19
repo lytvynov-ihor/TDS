@@ -8,14 +8,18 @@ public class Enemy : MonoBehaviour
     public int damageToBase = 10;
     public int damageToUnits = 5;
     public float attackRange = 3f;
+    public int earnOnDeath = 5;
 
     public Transform path;
     private List<Transform> waypoints = new List<Transform>();
     private int currentWaypointIndex = 0;
     private Transform targetBase;
+    private Money money;
 
     void Start()
     {
+        money = GameObject.FindWithTag("GameManager").GetComponent<Money>();
+        
         if (path != null)
         {
             foreach (Transform child in path)

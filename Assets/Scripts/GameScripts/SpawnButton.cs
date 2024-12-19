@@ -20,15 +20,13 @@ public class SpawnButton : MonoBehaviour
     void Start()
     {
         money = FindObjectOfType<Money>();
-        tower = FindObjectOfType<Tower>();
-        //tower = objectToSpawn.GetComponent<Tower>(); // Get Tower component from objectToSpawn
+        tower = objectToSpawn.GetComponent<Tower>(); // Get Tower component from objectToSpawn
         towersPlaced = 0;
         canSpawn = false;
     }
 
     void Update()
     {
-        tower = FindObjectOfType<Tower>();
         if (Input.GetKeyDown(KeyCode.Q))
         {
             canSpawn = false;
@@ -46,12 +44,12 @@ public class SpawnButton : MonoBehaviour
 
                 if (canSpawn == true)
                 {
-                    if(money.currentCash > 0)
+                    if(money.currentCash >= tower.towerCost)
                     {
                         Instantiate(objectToSpawn, intersectionPoint, Quaternion.identity);
                         canSpawn = false;
                         towersPlaced++;
-                        //money.DeductCash(tower.moneyCost);                       
+                        money.DeductCash(tower.towerCost);                       
                         towerManager.IncreasePlacedTowersAmount(1);
                         Debug.Log(money.currentCash);
                     }
