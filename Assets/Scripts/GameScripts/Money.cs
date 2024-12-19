@@ -22,7 +22,7 @@ public class Money : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(tower.name.ToString());
+        //Debug.Log(tower.name.ToString());
     }
 
     public void UpdateCashUI()

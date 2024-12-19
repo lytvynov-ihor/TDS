@@ -1535,7 +1535,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementSpeed: 7
   unitHealth: 100
-  path: {fileID: 309980458346511911, guid: 201852103d1c39743bf6bdf47b82fadf, type: 3}
+  path: {fileID: 3201276993144035857, guid: 8e531f9d2dba88e4ea11b0e62449ccb6, type: 3}
 --- !u!54 &9186844195045641250
 Rigidbody:
   m_ObjectHideFlags: 0

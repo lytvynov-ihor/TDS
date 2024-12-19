@@ -31,6 +31,9 @@ public class Unit : MonoBehaviour
             Debug.LogError("Path object not assigned to the enemy.");
             return;
         }
+
+        waypoints.Reverse();
+
         if (waypoints.Count == 0)
         {
             Debug.LogError("The Path object has no child objects to use as waypoints.");

@@ -21,12 +21,12 @@ public class TowerAttack : MonoBehaviour
         startRotation = transform.rotation;//initial rotation of the tower
         fireTimer = fireCooldown;
         InvokeRepeating("UpdateTarget", 0f, 0.05f);//update the target every N seconds 
-        rangeOfAttack.localScale = new Vector3(attackRange, attackRange, 3f);
+        rangeOfAttack.localScale = new Vector3(attackRange * 10, attackRange * 10, 3f);
     }
 
     void Update()
     {
-        rangeOfAttack.localScale = new Vector3(attackRange, attackRange, 3f);
+        rangeOfAttack.localScale = new Vector3(attackRange * 10, attackRange * 10, 3f);
         if (target != null)
         {
             RotateTowardsEnemy();
