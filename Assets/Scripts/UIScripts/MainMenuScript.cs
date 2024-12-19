@@ -5,7 +5,7 @@ public class MainMenuScript : MonoBehaviour
 {
     public void StartGame()
     {
-        SceneManager.LoadSceneAsync(1);
+        SceneManager.LoadSceneAsync(2);
     }
 
     public void QuitGame()
