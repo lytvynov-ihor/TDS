@@ -8,7 +8,7 @@ public class GameMenu : MonoBehaviour
     public GameObject menuImg = null;
     void Start()
     {
-        Time.timeScale = 0f;
+        Time.timeScale = 1f;
         menuImg.SetActive(true);
     }
 
