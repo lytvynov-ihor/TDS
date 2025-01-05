@@ -5,17 +5,17 @@ using UnityEngine.UI;
 
 public class GameMenu : MonoBehaviour
 {
-    public GameObject menuImg = null;
+    //public GameObject menuImg = null;
     void Start()
     {
         Time.timeScale = 1f;
-        menuImg.SetActive(true);
+        //menuImg.SetActive(true);
     }
 
     public void StartGame()
     {
         Time.timeScale = 1f;
-        menuImg.SetActive(false);
+        //menuImg.SetActive(false);
     }
 
     public void QuitGame()
