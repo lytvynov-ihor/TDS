@@ -8,7 +8,6 @@ public class AudioManager : MonoBehaviour
 
     void Awake()
     {
-        // Ensure only one instance of the AudioManager exists
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
@@ -17,14 +16,12 @@ public class AudioManager : MonoBehaviour
 
         Instance = this;
 
-        // Find the AudioSource in the scene
         sceneAudioSource = GetComponent<AudioSource>();
         if (sceneAudioSource == null)
         {
             Debug.LogError("AudioManager requires an AudioSource component on the same GameObject.");
         }
 
-        // Optionally make the AudioManager persist between scenes
         DontDestroyOnLoad(gameObject);
     }
 

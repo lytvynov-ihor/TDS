@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class EnemyBoss : MonoBehaviour
 {
-    public AudioClip bossTheme; // Boss-specific theme
+    public AudioClip bossTheme;
 
     void Start()
     {
