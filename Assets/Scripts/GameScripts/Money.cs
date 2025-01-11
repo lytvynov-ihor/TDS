@@ -27,7 +27,7 @@ public class Money : MonoBehaviour
 
     public void UpdateCashUI()
     {
-        cashText.text = "Cash: " + currentCash.ToString();
+        cashText.text = "Cash: " + currentCash.ToString() + "$$";
     }
 
     public void DeductCash(int amount)

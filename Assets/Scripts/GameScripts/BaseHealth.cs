@@ -5,9 +5,9 @@ using UnityEngine.UI;
 
 public class BaseHealth : MonoBehaviour
 {
-    [SerializeField] int maxHealth = 100; // Maximum health of the base
+    [SerializeField] int maxHealth = 100;// Maximum health of the base
     public Text baseHealthText;
-    public Slider healthSlider;//remove later
+    public Slider healthSlider;//actually don't remove
     private float currentHealth; // Current health of the base
 
     void Start()
@@ -47,7 +47,7 @@ public class BaseHealth : MonoBehaviour
 
     public void UpdateHealth()
     {
-        baseHealthText.text = "Health: " + currentHealth.ToString();
+        baseHealthText.text = "Reputation Points: " + currentHealth.ToString() + "/" + maxHealth.ToString();
     }
 
     public bool healthPositive()

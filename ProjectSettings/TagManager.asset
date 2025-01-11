@@ -12,6 +12,7 @@ TagManager:
   - Path
   - GameManager
   - CashFarm
+  - BossAudioSource
   layers:
   - Default
   - TransparentFX

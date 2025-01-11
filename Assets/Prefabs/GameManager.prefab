@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8088952246797262972}
   - component: {fileID: 2171549597453583655}
   - component: {fileID: 1548365845943686520}
+  - component: {fileID: 1941942541109758545}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: GameManager
@@ -75,7 +76,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a4136387f8350043b56891176695827, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingCash: 500
+  startingCash: 1500
   cashText: {fileID: 0}
   currentCash: 0
 --- !u!114 &2171549597453583655
@@ -90,7 +91,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6fc148e80931a74382a4904dc8a3e2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  menuImg: {fileID: 0}
 --- !u!114 &1548365845943686520
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -105,13 +105,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waves:
   - enemies:
-    - {fileID: 137529608538164736, guid: 236685fc7af669940b5a6fea1af12dfe, type: 3}
-    - {fileID: 137529608538164736, guid: 236685fc7af669940b5a6fea1af12dfe, type: 3}
-    - {fileID: 137529608538164736, guid: 236685fc7af669940b5a6fea1af12dfe, type: 3}
-    - {fileID: 137529608538164736, guid: 236685fc7af669940b5a6fea1af12dfe, type: 3}
-    - {fileID: 137529608538164736, guid: 236685fc7af669940b5a6fea1af12dfe, type: 3}
-    advisorMessage: Got a life? If no, goodluck
-    advisorDuration: 8
+    - {fileID: 3191135129868663940, guid: 9135d40a50bf0054b9345318491ff36f, type: 3}
+    advisorMessage: Greetings, Commander. Welcome to the Eastern Border, this place
+      will be your training grounds from now on. First training exercise for you
+      is to eliminate incoming Testing Droids. Place some turrets, quick!
+    advisorDuration: 12
   - enemies:
     - {fileID: 137529608538164736, guid: 236685fc7af669940b5a6fea1af12dfe, type: 3}
     - {fileID: 137529608538164736, guid: 236685fc7af669940b5a6fea1af12dfe, type: 3}
@@ -121,8 +119,11 @@ MonoBehaviour:
     - {fileID: 137529608538164736, guid: 236685fc7af669940b5a6fea1af12dfe, type: 3}
     - {fileID: 137529608538164736, guid: 236685fc7af669940b5a6fea1af12dfe, type: 3}
     - {fileID: 137529608538164736, guid: 236685fc7af669940b5a6fea1af12dfe, type: 3}
-    advisorMessage: Managed to get a life? No? Keep it up, maggot.
-    advisorDuration: 6
+    advisorMessage: As you have noticed, you lose Reputation Points for letting enemies
+      reach the Checkpoint. If your reputation drops to 0, you will be demoted back
+      to the Non-Comissioned Officer. So try not to leak a lot. Also try to upgrade
+      some of your turrets, it might come in handy.
+    advisorDuration: 12
   - enemies:
     - {fileID: 137529608538164736, guid: 236685fc7af669940b5a6fea1af12dfe, type: 3}
     - {fileID: 137529608538164736, guid: 236685fc7af669940b5a6fea1af12dfe, type: 3}
@@ -134,9 +135,12 @@ MonoBehaviour:
     - {fileID: 137529608538164736, guid: ac4f4746d922d13448467aec2e23b5b4, type: 3}
     - {fileID: 137529608538164736, guid: ac4f4746d922d13448467aec2e23b5b4, type: 3}
     - {fileID: 137529608538164736, guid: ac4f4746d922d13448467aec2e23b5b4, type: 3}
-    advisorMessage: That is not so sigma of you- Wait a moment, that's the wrong
-      script- *awkward silence*
-    advisorDuration: 0
+    advisorMessage: 'I believe you were taught it back in the Academy, but let me
+      repeat it once more. Some of the available turrets have more than 1 upgrade
+      paths. Every Path has pros and cons: Top path for some turrets might increase
+      their Damage Per Second and is good for eliminating elite threats, while Bottom
+      path might be focused on crowd control with explosive capabilities.'
+    advisorDuration: 12
   - enemies:
     - {fileID: 137529608538164736, guid: ac4f4746d922d13448467aec2e23b5b4, type: 3}
     - {fileID: 137529608538164736, guid: ac4f4746d922d13448467aec2e23b5b4, type: 3}
@@ -148,10 +152,110 @@ MonoBehaviour:
     - {fileID: 137529608538164736, guid: ac4f4746d922d13448467aec2e23b5b4, type: 3}
     - {fileID: 137529608538164736, guid: ac4f4746d922d13448467aec2e23b5b4, type: 3}
     - {fileID: 137529608538164736, guid: ac4f4746d922d13448467aec2e23b5b4, type: 3}
-    advisorMessage: Finally got a life! Congrats!
+    advisorMessage: Slowly waves will increase in difficulty. But if your defenses
+      are strong enough, you should prevail. Oh and by the way, forgot to mention,
+      some turrets do not have any attacks; they are focused on creating units that
+      follow the path and attack enemies, consider using such towers.
     advisorDuration: 10
   spawnPoint: {fileID: 0}
-  spawnInterval: 1.5
+  spawnInterval: 0.5
   startWaveButton: {fileID: 0}
   player: {fileID: 0}
   advisor: {fileID: 0}
+--- !u!82 &1941942541109758545
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8088952246797262848}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: c2e5a29ba2a8d434a8f60fb7d33846e4, type: 3}
+  m_Resource: {fileID: 8300000, guid: c2e5a29ba2a8d434a8f60fb7d33846e4, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
