@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 8753965110489337510}
   m_Layer: 0
   m_Name: Shell
-  m_TagString: Untagged
+  m_TagString: Explosion
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -102,7 +102,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   curve: {fileID: 0}
   attackDamage: 50
-  speed: 2
+  speed: 5
   particle: {fileID: 6470170726573043807, guid: 9777a9e2807d4ef408927dcc6159962a, type: 3}
 --- !u!136 &8753965110489337510
 CapsuleCollider:
