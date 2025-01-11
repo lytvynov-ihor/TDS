@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Net;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,7 +21,7 @@ public class TowerAttack : MonoBehaviour
     {
         startRotation = transform.rotation;//initial rotation of the tower
         fireTimer = fireCooldown;
-        InvokeRepeating("UpdateTarget", 0f, 0.05f);//update the target every N seconds 
+        InvokeRepeating("UpdateTarget", 0f, 0.001f);//update the target every N seconds 
         rangeOfAttack.localScale = new Vector3(attackRange * 10, attackRange * 10, 3f);
     }
 
@@ -94,6 +95,9 @@ public class TowerAttack : MonoBehaviour
         {
             if (hit.collider.CompareTag("Enemy"))
             {
+                if (hit.collider.GetComponent<Immunities>().bulletProof)
+                    return;
+                
                 EnemyHealth health = hit.collider.GetComponent<EnemyHealth>();
                 if (health != null)
                 {

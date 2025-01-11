@@ -35,6 +35,9 @@ void Update()
         {
             if (c.CompareTag("Enemy"))
             {
+                if(c.gameObject.GetComponent<Immunities>().explosionProof)
+                    continue;
+                
                 EnemyHealth health = c.GetComponent<EnemyHealth>();
                 if (health != null)
                 {

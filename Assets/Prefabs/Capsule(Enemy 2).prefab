@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5868355308907147257}
   - component: {fileID: 5181004436674238576}
   - component: {fileID: 1631973117316842541}
+  - component: {fileID: 2116725197813874731}
   m_Layer: 0
   m_Name: Capsule(Enemy 2)
   m_TagString: Enemy
@@ -133,6 +134,7 @@ MonoBehaviour:
   damageToBase: 15
   damageToUnits: 10
   attackRange: 4
+  earnOnDeath: 10
   path: {fileID: 3201276993144035857, guid: 8e531f9d2dba88e4ea11b0e62449ccb6, type: 3}
 --- !u!114 &1631973117316842541
 MonoBehaviour:
@@ -149,6 +151,20 @@ MonoBehaviour:
   maxHealth: 250
   healthSlider: {fileID: 6399427953265894001}
   reward: 55
+--- !u!114 &2116725197813874731
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 137529608538164736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0edd14aae4c996b4b9c28080adab516d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletProof: 0
+  explosionProof: 0
 --- !u!1 &2791282503410425690
 GameObject:
   m_ObjectHideFlags: 0
