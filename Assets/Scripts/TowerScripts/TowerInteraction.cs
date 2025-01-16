@@ -1,8 +1,15 @@
+using UnityEditor.Build.Content;
 using UnityEngine;
 
 public class TowerInteraction : MonoBehaviour
 {
     private Tower tower;
+    public Money money;
+
+    void Start()
+    {
+        money = this.GetComponent<Money>();
+    }
 
     void Update()
     {

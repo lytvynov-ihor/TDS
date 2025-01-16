@@ -28,6 +28,8 @@ public class TowerSpawner : MonoBehaviour
     public Slider healthBar;
     public float maxHealth;
     public int towerCost;
+    
+    private GameObject gameManager;
 
     private int topPathUpgrades = 0;
     private int bottomPathUpgrades = 0;
@@ -39,6 +41,8 @@ public class TowerSpawner : MonoBehaviour
 
     void Start()
     {
+        gameManager = GameObject.FindWithTag("GameManager");
+        
         foreach (var unitInfo in unitSpawnList)
         {
             unitInfo.nextSpawnTime = Time.time + unitInfo.spawnInterval;
@@ -252,5 +256,11 @@ public class TowerSpawner : MonoBehaviour
     {
         Debug.Log("Top Path upgrades: " + topPathUpgrades + "/" + maxUpgrades);
         Debug.Log("Bottom Path upgrades: " + bottomPathUpgrades + "/" + maxUpgrades);
+    }
+    
+    public void sellTower()
+    {
+        gameManager.GetComponent<Money>().IncreaseCash(towerCost); 
+        Destroy(this.gameObject);
     }
 }

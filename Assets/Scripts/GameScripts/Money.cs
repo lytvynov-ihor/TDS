@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,12 +9,11 @@ public class Money : MonoBehaviour
     [SerializeField] public int startingCash = 500;
     [SerializeField] Text cashText;
     public int currentCash;
-    private Tower tower;
+   // public GameObject towerObj;
     private TowerManager towerManager;
     // Start is called before the first frame update
     void Start()
     {
-        tower = FindObjectOfType<Tower>();
         towerManager = FindObjectOfType<TowerManager>();
         currentCash = startingCash;
         UpdateCashUI();
@@ -22,7 +22,7 @@ public class Money : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Debug.Log(tower.name.ToString());
+        //Debug.Log("Tower set: " + towerObj.name);
     }
 
     public void UpdateCashUI()
@@ -42,10 +42,13 @@ public class Money : MonoBehaviour
         UpdateCashUI();
     }
 
-    public void SellTower()
+    public void SellTower(GameObject t)
     {
-        //Destroy(tower);
-        //IncreaseCash(tower.towerCost);
+        // Debug.Log("sellTower: " + t.name);
+        // int sellcost = t.GetComponent<Tower>().towerCost;
+        // IncreaseCash(sellcost);
+        // Destroy(t);
         //fuck this shit bruh, we will have to add this later
     }
+    
 }

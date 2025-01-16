@@ -23,6 +23,7 @@ public class TowerExplosive : MonoBehaviour
     public int towerCost;
 
     private TowerAttackExplosion towerAttack;
+    private GameObject gameManager;
 
     private int topPathUpgrades = 0;
     private int bottomPathUpgrades = 0;
@@ -36,6 +37,8 @@ public class TowerExplosive : MonoBehaviour
     {
         towerAttack = GetComponent<TowerAttackExplosion>();
         maxHealth = healthPoints;
+        
+        gameManager = GameObject.FindWithTag("GameManager");
 
         foreach (UpgradeStep step in topPathUpgradeSteps)
         {
@@ -220,5 +223,14 @@ public class TowerExplosive : MonoBehaviour
     {
         Debug.Log("Top Path upgrades: " + topPathUpgrades + "/" + maxUpgrades);
         Debug.Log("Bottom Path upgrades: " + bottomPathUpgrades + "/" + maxUpgrades);
+    }
+    
+    public void sellTower()
+    {
+        gameManager.GetComponent<Money>().IncreaseCash(towerCost); 
+        if(this.transform.parent.gameObject.CompareTag("Tower"))
+            Destroy(this.transform.parent.gameObject);
+        else
+            Destroy(this.gameObject);
     }
 }
