@@ -4,51 +4,51 @@ using UnityEngine;
 
 public class ProjectileShell : MonoBehaviour
 {
-public QuadraticCurve curve;
-public int attackDamage;
-public float speed;
-public ParticleSystem particle;
+    public QuadraticCurve curve;
+    public int attackDamage;
+    public float speed;
+    public ParticleSystem particle;
 
-private float sampleTime;
+    private float sampleTime;
 
-void Start()
-{
-    sampleTime = 0f;
-}
-
-void Update()
-{
-    sampleTime += Time.deltaTime * speed;
-    transform.position = curve.evaluate(sampleTime);
-    transform.forward = curve.evaluate(sampleTime+0.001f) - transform.position;
-
-    if (sampleTime >= 0.5f)
+    void Start()
     {
-        speed += 0.03f;
+        sampleTime = 0f;
     }
 
-    if (sampleTime >= 1f)
+    void Update()
     {
-        Instantiate(particle, transform.position, Quaternion.identity);
-        Collider[] colliders = Physics.OverlapSphere(transform.position, 5f);
-        foreach (Collider c in colliders)
+        sampleTime += Time.deltaTime * speed;
+        transform.position = curve.evaluate(sampleTime);
+        transform.forward = curve.evaluate(sampleTime+0.001f) - transform.position;
+
+        if (sampleTime >= 0.5f)
         {
-            if (c.CompareTag("Enemy"))
+            speed += 0.03f;
+        }
+
+        if (sampleTime >= 1f)
+        {
+            Instantiate(particle, transform.position, Quaternion.identity);
+            Collider[] colliders = Physics.OverlapSphere(transform.position, 5f);
+            foreach (Collider c in colliders)
             {
-                if(c.gameObject.GetComponent<Immunities>().explosionProof)
-                    continue;
-                
-                EnemyHealth health = c.GetComponent<EnemyHealth>();
-                if (health != null)
+                if (c.CompareTag("Enemy"))
                 {
-                    health.TakeDamage(attackDamage);
+                    if(c.gameObject.GetComponent<Immunities>().explosionProof)
+                        continue;
+                
+                    EnemyHealth health = c.GetComponent<EnemyHealth>();
+                    if (health != null)
+                    {
+                        health.TakeDamage(attackDamage);
+                    }
                 }
             }
+            Destroy(curve.GameObject());
+            Destroy(curve.b.GameObject());
+            Destroy(curve.control.GameObject());
+            Destroy(gameObject);
         }
-        Destroy(curve.GameObject());
-        Destroy(curve.b.GameObject());
-        Destroy(curve.control.GameObject());
-        Destroy(gameObject);
     }
-}
 }

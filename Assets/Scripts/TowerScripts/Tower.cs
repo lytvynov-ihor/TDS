@@ -18,7 +18,7 @@ public class Tower : MonoBehaviour
 {
     [SerializeField] public int healthPoints = 100;
     public Slider healthBar;
-    public float maxHealth;
+    public int maxHealth;
     public string towerName;
     public int towerCost;
 
