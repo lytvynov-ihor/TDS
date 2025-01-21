@@ -8,6 +8,7 @@ public class EnemyBoss : MonoBehaviour
     public class Turret
     {
         public GameObject turretObject; // The turret GameObject
+        public Transform barrels; // The child object responsible for vertical aiming
         public float fireRate = 1f; // How often the turret fires
         public int turretDamage = 10; // Damage dealt by the turret
         public Transform firePoint; // Where the turret fires from
@@ -118,7 +119,7 @@ public class EnemyBoss : MonoBehaviour
             Transform closestTarget = GetClosestTarget(turret.turretObject.transform);
             if (closestTarget != null)
             {
-                RotateTurretTowardsTarget(turret.turretObject, closestTarget);
+                RotateTurretTowardsTarget(turret, closestTarget);
                 turret.TryFire(closestTarget);
             }
         }
@@ -142,13 +143,30 @@ public class EnemyBoss : MonoBehaviour
         return closestTarget;
     }
 
-    void RotateTurretTowardsTarget(GameObject turret, Transform target)
+    void RotateTurretTowardsTarget(Turret turret, Transform target)
     {
-        if (turret != null && target != null)
+        if (turret.turretObject != null && target != null)
         {
-            Vector3 direction = (target.position - turret.transform.position).normalized;
-            Quaternion lookRotation = Quaternion.LookRotation(direction);
-            turret.transform.rotation = Quaternion.Slerp(turret.transform.rotation, lookRotation, rotationSpeed * Time.deltaTime);
+            // Rotate the turret horizontally (Y-axis only)
+            Vector3 direction = (target.position - turret.turretObject.transform.position).normalized;
+            Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
+            turret.turretObject.transform.rotation = Quaternion.Slerp(
+                turret.turretObject.transform.rotation,
+                lookRotation,
+                rotationSpeed * Time.deltaTime
+            );
+
+            // Rotate the barrels vertically (X-axis)
+            if (turret.barrels != null)
+            {
+                Vector3 barrelDirection = (target.position - turret.barrels.position).normalized;
+                Quaternion barrelLookRotation = Quaternion.LookRotation(barrelDirection);
+                turret.barrels.rotation = Quaternion.Slerp(
+                    turret.barrels.rotation,
+                    barrelLookRotation,
+                    rotationSpeed * Time.deltaTime
+                );
+            }
         }
     }
 
