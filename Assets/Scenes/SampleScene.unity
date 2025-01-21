@@ -57765,20 +57765,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ef3d207b5db4554f81270797a509d31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bossTheme: {fileID: 8300000, guid: c2e5a29ba2a8d434a8f60fb7d33846e4, type: 3}
-  moveSpeed: 2
-  rotationSpeed: 5
-  waypointParent: {fileID: 755791212}
+  waypointsParent: {fileID: 755791212}
   turrets:
-  - {fileID: 0}
-  - {fileID: 0}
-  turretRotationSpeed: 2
-  turretRange: 150
-  areaDamage: 100
-  areaDamageRadius: 25
+  - {fileID: 5020026351383512032}
+  - {fileID: 8627612962476523482}
+  rotationSpeed: 5
+  areaAttackRadius: 10
+  areaAttackDamage: 30
   smokeShellRadius: 15
-  smokeDuration: 20
-  specialAttackCooldown: 35
+  turretRangeReduction: 5
+  bossTheme: {fileID: 8300000, guid: c2e5a29ba2a8d434a8f60fb7d33846e4, type: 3}
 --- !u!23 &7016529830634033682
 MeshRenderer:
   m_ObjectHideFlags: 0

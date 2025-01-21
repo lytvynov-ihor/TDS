@@ -4,8 +4,40 @@ using UnityEngine;
 
 public class EnemyBoss : MonoBehaviour
 {
-    public Transform waypointsParent; // Parent GameObject with child waypoints
-    public List<GameObject> turrets = new List<GameObject>(); // Turrets to rotate
+    [System.Serializable]
+    public class Turret
+    {
+        public GameObject turretObject; // The turret GameObject
+        public float fireRate = 1f; // How often the turret fires
+        public int turretDamage = 10; // Damage dealt by the turret
+        public Transform firePoint; // Where the turret fires from
+        private float nextFireTime = 0f; // Time tracking for firing
+
+        public void TryFire(Transform target)
+        {
+            if (Time.time >= nextFireTime)
+            {
+                nextFireTime = Time.time + 1f / fireRate;
+                Fire(target);
+            }
+        }
+
+        private void Fire(Transform target)
+        {
+            if (target != null)
+            {
+                Debug.Log($"{turretObject.name} is firing at {target.name}!");
+                Tower tower = target.GetComponent<Tower>();
+                if (tower != null)
+                {
+                    tower.TakeDamage(turretDamage);
+                }
+            }
+        }
+    }
+
+    public List<Turret> turrets = new List<Turret>(); // List of turrets
+    public float attackRange = 15f; // Shared attack range for all turrets
     public float rotationSpeed = 2f; // Speed of turret rotation
 
     public float areaAttackRadius = 10f; // Radius for the area attack
@@ -14,10 +46,14 @@ public class EnemyBoss : MonoBehaviour
     public float smokeShellRadius = 10f; // Radius for the smoke shell
     public float turretRangeReduction = 5f; // Amount to reduce tower attack range in Smoke Shell
 
-    private List<Transform> waypoints = new List<Transform>(); // Waypoints for movement
-    private int currentWaypointIndex = 0; // Index of the current waypoint
+    public Transform waypointsParent; // Parent object containing waypoints as children
+    private List<Transform> waypoints = new List<Transform>();
+    private int currentWaypointIndex = 0;
+    public float moveSpeed = 5f;
 
-    public AudioClip bossTheme;
+    public AudioClip bossTheme; // Boss theme to play
+
+    private List<Transform> targetsInRange = new List<Transform>(); // List of targets in range
 
     void Start()
     {
@@ -26,8 +62,18 @@ public class EnemyBoss : MonoBehaviour
             AudioManager.Instance.PlayClip(bossTheme);
         }
 
+        InitializeWaypoints();
+    }
 
-        // Gather waypoints from the parent object
+    void Update()
+    {
+        MoveAlongWaypoints();
+        FindTargetsInRange();
+        RotateAndFireTurrets();
+    }
+
+    void InitializeWaypoints()
+    {
         if (waypointsParent != null)
         {
             foreach (Transform waypoint in waypointsParent)
@@ -35,49 +81,79 @@ public class EnemyBoss : MonoBehaviour
                 waypoints.Add(waypoint);
             }
         }
-
-        // Position the Boss at the first waypoint if available
-        if (waypoints.Count > 0)
-        {
-            transform.position = waypoints[0].position;
-        }
     }
 
-    void Update()
+    void MoveAlongWaypoints()
     {
-        MoveToNextWaypoint();
-        RotateTurrets();
-    }
-
-    void MoveToNextWaypoint()
-    {
-        if (waypoints.Count == 0) return;
+        if (waypoints.Count == 0 || currentWaypointIndex >= waypoints.Count) return;
 
         Transform targetWaypoint = waypoints[currentWaypointIndex];
-        transform.position = Vector3.MoveTowards(transform.position, targetWaypoint.position, 5f * Time.deltaTime);
+        Vector3 direction = (targetWaypoint.position - transform.position).normalized;
+        transform.position += direction * moveSpeed * Time.deltaTime;
 
-        if (Vector3.Distance(transform.position, targetWaypoint.position) < 0.1f)
+        if (Vector3.Distance(transform.position, targetWaypoint.position) < 0.5f)
         {
-            currentWaypointIndex = (currentWaypointIndex + 1) % waypoints.Count;
+            currentWaypointIndex++;
         }
     }
 
-    void RotateTurrets()
+    void FindTargetsInRange()
     {
-        foreach (GameObject turret in turrets)
+        targetsInRange.Clear();
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, attackRange);
+        foreach (Collider hitCollider in hitColliders)
         {
-            if (turret != null)
+            Tower tower = hitCollider.GetComponent<Tower>();
+            if (tower != null)
             {
-                // Make turrets rotate towards the forward direction
-                Quaternion targetRotation = Quaternion.LookRotation(transform.forward);
-                turret.transform.rotation = Quaternion.Slerp(turret.transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+                targetsInRange.Add(tower.transform);
             }
         }
     }
 
-    public void initiateAreaAttack()
+    void RotateAndFireTurrets()
     {
-        // Damage all towers within the area attack radius
+        foreach (Turret turret in turrets)
+        {
+            Transform closestTarget = GetClosestTarget(turret.turretObject.transform);
+            if (closestTarget != null)
+            {
+                RotateTurretTowardsTarget(turret.turretObject, closestTarget);
+                turret.TryFire(closestTarget);
+            }
+        }
+    }
+
+    Transform GetClosestTarget(Transform turretTransform)
+    {
+        Transform closestTarget = null;
+        float shortestDistance = Mathf.Infinity;
+
+        foreach (Transform target in targetsInRange)
+        {
+            float distanceToTarget = Vector3.Distance(turretTransform.position, target.position);
+            if (distanceToTarget < shortestDistance)
+            {
+                shortestDistance = distanceToTarget;
+                closestTarget = target;
+            }
+        }
+
+        return closestTarget;
+    }
+
+    void RotateTurretTowardsTarget(GameObject turret, Transform target)
+    {
+        if (turret != null && target != null)
+        {
+            Vector3 direction = (target.position - turret.transform.position).normalized;
+            Quaternion lookRotation = Quaternion.LookRotation(direction);
+            turret.transform.rotation = Quaternion.Slerp(turret.transform.rotation, lookRotation, rotationSpeed * Time.deltaTime);
+        }
+    }
+
+    public void AreaAttack()
+    {
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, areaAttackRadius);
         foreach (Collider hitCollider in hitColliders)
         {
@@ -90,9 +166,8 @@ public class EnemyBoss : MonoBehaviour
         }
     }
 
-    public void deploySmokeShell()
+    public void SmokeShell()
     {
-        // Reduce the range of all towers within the smoke shell radius
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, smokeShellRadius);
         foreach (Collider hitCollider in hitColliders)
         {
@@ -108,37 +183,13 @@ public class EnemyBoss : MonoBehaviour
 
     void OnDrawGizmosSelected()
     {
-        // Visualize the area attack and smoke shell radii in the editor
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, areaAttackRadius);
+        Gizmos.DrawWireSphere(transform.position, attackRange);
 
         Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, areaAttackRadius);
+
+        Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, smokeShellRadius);
-    }
-
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.tag == "Base")
-        {
-            BaseHealth baseHealth = other.gameObject.GetComponent<BaseHealth>();
-            if (baseHealth != null)
-            {
-                baseHealth.TakeDamage(damageToBase);
-            }
-            else
-            {
-                Debug.LogError("Base object does not have a BaseHealth component attached.");
-            }
-            Destroy(gameObject);
-        }
-    }
-
-    private void OnDestroy()
-    {
-        Spawner waveManager = FindObjectOfType<Spawner>();
-        if (waveManager != null)
-        {
-            waveManager.EnemyDestroyed();
-        }
     }
 }
