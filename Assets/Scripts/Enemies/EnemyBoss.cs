@@ -7,12 +7,12 @@ public class EnemyBoss : MonoBehaviour
     [System.Serializable]
     public class Turret
     {
-        public GameObject turretObject; // The turret GameObject
-        public Transform barrels; // The child object responsible for vertical aiming
-        public float fireRate = 1f; // How often the turret fires
-        public int turretDamage = 10; // Damage dealt by the turret
-        public Transform firePoint; // Where the turret fires from
-        private float nextFireTime = 0f; // Time tracking for firing
+        public GameObject turretObject;
+        public Transform barrels;
+        public float fireRate = 1f;
+        public int turretDamage = 10;
+        public Transform firePoint;
+        private float nextFireTime = 0f;
 
         public void TryFire(Transform target)
         {
@@ -22,6 +22,14 @@ public class EnemyBoss : MonoBehaviour
                 Fire(target);
             }
         }
+
+
+        //
+        //
+        //TO DO: actually make Boss use Special Attacks and not what it is using right now
+        //
+        //
+
 
         private void Fire(Transform target)
         {
@@ -37,24 +45,24 @@ public class EnemyBoss : MonoBehaviour
         }
     }
 
-    public List<Turret> turrets = new List<Turret>(); // List of turrets
-    public float attackRange = 15f; // Shared attack range for all turrets
-    public float rotationSpeed = 2f; // Speed of turret rotation
+    public List<Turret> turrets = new List<Turret>();
+    public float attackRange = 15f;
+    public float rotationSpeed = 2f;
 
-    public float areaAttackRadius = 10f; // Radius for the area attack
-    public int areaAttackDamage = 30; // Damage dealt by the area attack
+    public float areaAttackRadius = 10f;
+    public int areaAttackDamage = 30;
 
-    public float smokeShellRadius = 10f; // Radius for the smoke shell
-    public float turretRangeReduction = 5f; // Amount to reduce tower attack range in Smoke Shell
+    public float smokeShellRadius = 10f;
+    public float turretRangeReduction = 5f;
 
-    public Transform waypointsParent; // Parent object containing waypoints as children
+    public Transform waypointsParent;
     private List<Transform> waypoints = new List<Transform>();
     private int currentWaypointIndex = 0;
     public float moveSpeed = 5f;
 
-    public AudioClip bossTheme; // Boss theme to play
+    public AudioClip bossTheme;
 
-    private List<Transform> targetsInRange = new List<Transform>(); // List of targets in range
+    private List<Transform> targetsInRange = new List<Transform>();
 
     void Start()
     {
@@ -63,17 +71,17 @@ public class EnemyBoss : MonoBehaviour
             AudioManager.Instance.PlayClip(bossTheme);
         }
 
-        InitializeWaypoints();
+        initializeWaypoints();
     }
 
     void Update()
     {
-        MoveAlongWaypoints();
-        FindTargetsInRange();
-        RotateAndFireTurrets();
+        moveWaypoints();
+        findTargetsInRange();
+        rotateAndFire();
     }
 
-    void InitializeWaypoints()
+    void initializeWaypoints()
     {
         if (waypointsParent != null)
         {
@@ -84,7 +92,7 @@ public class EnemyBoss : MonoBehaviour
         }
     }
 
-    void MoveAlongWaypoints()
+    void moveWaypoints()
     {
         if (waypoints.Count == 0 || currentWaypointIndex >= waypoints.Count) return;
 
@@ -98,7 +106,7 @@ public class EnemyBoss : MonoBehaviour
         }
     }
 
-    void FindTargetsInRange()
+    void findTargetsInRange()
     {
         targetsInRange.Clear();
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, attackRange);
@@ -112,20 +120,20 @@ public class EnemyBoss : MonoBehaviour
         }
     }
 
-    void RotateAndFireTurrets()
+    void rotateAndFire()
     {
         foreach (Turret turret in turrets)
         {
-            Transform closestTarget = GetClosestTarget(turret.turretObject.transform);
+            Transform closestTarget = getClosestTarget(turret.turretObject.transform);
             if (closestTarget != null)
             {
-                RotateTurretTowardsTarget(turret, closestTarget);
+                rotateTurrets(turret, closestTarget);
                 turret.TryFire(closestTarget);
             }
         }
     }
 
-    Transform GetClosestTarget(Transform turretTransform)
+    Transform getClosestTarget(Transform turretTransform)
     {
         Transform closestTarget = null;
         float shortestDistance = Mathf.Infinity;
@@ -143,11 +151,10 @@ public class EnemyBoss : MonoBehaviour
         return closestTarget;
     }
 
-    void RotateTurretTowardsTarget(Turret turret, Transform target)
+    void rotateTurrets(Turret turret, Transform target)
     {
         if (turret.turretObject != null && target != null)
         {
-            // Rotate the turret horizontally (Y-axis only)
             Vector3 direction = (target.position - turret.turretObject.transform.position).normalized;
             Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
             turret.turretObject.transform.rotation = Quaternion.Slerp(
@@ -156,7 +163,6 @@ public class EnemyBoss : MonoBehaviour
                 rotationSpeed * Time.deltaTime
             );
 
-            // Rotate the barrels vertically (X-axis)
             if (turret.barrels != null)
             {
                 Vector3 barrelDirection = (target.position - turret.barrels.position).normalized;
@@ -170,7 +176,7 @@ public class EnemyBoss : MonoBehaviour
         }
     }
 
-    public void AreaAttack()
+    public void initiateAreaAttack()
     {
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, areaAttackRadius);
         foreach (Collider hitCollider in hitColliders)
@@ -184,7 +190,7 @@ public class EnemyBoss : MonoBehaviour
         }
     }
 
-    public void SmokeShell()
+    public void deploySmokeShell()
     {
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, smokeShellRadius);
         foreach (Collider hitCollider in hitColliders)
