@@ -165,11 +165,17 @@ public class EnemyBoss : MonoBehaviour
 
             if (turret.barrels != null)
             {
-                Vector3 barrelDirection = (target.position - turret.barrels.position).normalized;
-                Quaternion barrelLookRotation = Quaternion.LookRotation(barrelDirection);
-                turret.barrels.rotation = Quaternion.Slerp(
-                    turret.barrels.rotation,
-                    barrelLookRotation,
+                Vector3 targetPosition = target.position;
+                targetPosition.y = turret.barrels.position.y; // Keep the target's y-position relative to the barrels
+                Vector3 barrelDirection = targetPosition - turret.barrels.position;
+
+                // Calculate the rotation needed for X-axis only
+                float angleX = Mathf.Atan2(barrelDirection.y, barrelDirection.z) * Mathf.Rad2Deg;
+                Quaternion barrelRotation = Quaternion.Euler(angleX, turret.barrels.localEulerAngles.y, turret.barrels.localEulerAngles.z);
+
+                turret.barrels.localRotation = Quaternion.Slerp(
+                    turret.barrels.localRotation,
+                    barrelRotation,
                     rotationSpeed * Time.deltaTime
                 );
             }
