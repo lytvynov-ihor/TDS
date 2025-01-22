@@ -15,11 +15,12 @@ public class Enemy : MonoBehaviour
     private int currentWaypointIndex = 0;
     private Transform targetBase;
     private Money money;
+    public float rotationSpeed = 5f;
 
     void Start()
     {
         money = GameObject.FindWithTag("GameManager").GetComponent<Money>();
-        
+
         if (path != null)
         {
             foreach (Transform child in path)
@@ -63,6 +64,11 @@ public class Enemy : MonoBehaviour
         if (currentWaypointIndex < waypoints.Count)
         {
             Transform targetWaypoint = waypoints[currentWaypointIndex];
+
+            Vector3 direction = (targetWaypoint.position - transform.position).normalized;
+            Quaternion targetRotation = Quaternion.LookRotation(direction);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+
             transform.position = Vector3.MoveTowards(transform.position, targetWaypoint.position, movementSpeed * Time.deltaTime);
 
             if (Vector3.Distance(transform.position, targetWaypoint.position) < 0.1f)
@@ -72,6 +78,11 @@ public class Enemy : MonoBehaviour
         }
         else if (targetBase != null)
         {
+            // Rotate and move toward the base
+            Vector3 direction = (targetBase.position - transform.position).normalized;
+            Quaternion targetRotation = Quaternion.LookRotation(direction);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+
             transform.position = Vector3.MoveTowards(transform.position, targetBase.position, movementSpeed * Time.deltaTime);
         }
     }
