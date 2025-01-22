@@ -23,6 +23,7 @@ public class Tower : MonoBehaviour
     public int towerCost;
 
     private TowerAttack towerAttack;
+    private UIStatsUpdate uiUpdate;
 
     private int topPathUpgrades = 0;
     private int bottomPathUpgrades = 0;
@@ -75,6 +76,10 @@ public class Tower : MonoBehaviour
 
         Debug.Log("Range Upgrades List Length: " + topPathUpgradeSteps.Count);
         Debug.Log("Speed Upgrades List Length: " + bottomPathUpgradeSteps.Count);
+        
+        uiUpdate = GetComponent<UIStatsUpdate>();
+        
+        UpdateStats();
     }
 
     void Update()
@@ -101,6 +106,7 @@ public class Tower : MonoBehaviour
                 ApplyUpgrade(topPathUpgradeSteps[topPathUpgrades]);
                 topPathUpgrades++;
                 CheckBlockingCondition();
+                UpdateStats();
                 Debug.Log("Range upgraded to level " + topPathUpgrades);
 
             }
@@ -124,6 +130,7 @@ public class Tower : MonoBehaviour
                 ApplyUpgrade(bottomPathUpgradeSteps[bottomPathUpgrades]);
                 bottomPathUpgrades++;
                 CheckBlockingCondition();
+                UpdateStats();
                 Debug.Log("Speed upgraded to level " + bottomPathUpgrades);
             }
             else
@@ -222,4 +229,14 @@ public class Tower : MonoBehaviour
         Debug.Log("Bottom Path upgrades: " + bottomPathUpgrades + "/" + maxUpgrades);
     }
     
+    private void UpdateStats()
+    {
+        TowerAttack towerStats = GetComponent<TowerAttack>();
+        if (uiUpdate != null)
+        {
+            uiUpdate.UpdateDamageText(towerStats.towerDamage);
+            uiUpdate.UpdateAtkSpeedText(towerStats.fireCooldown);
+            uiUpdate.UpdateRangeText(towerStats.attackRange);
+        }
+    }
 }

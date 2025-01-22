@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -30,6 +31,7 @@ public class TowerSpawner : MonoBehaviour
     public int towerCost;
     
     private GameObject gameManager;
+    private StatsUpdateFactory uIUpdate;
 
     private int topPathUpgrades = 0;
     private int bottomPathUpgrades = 0;
@@ -75,6 +77,10 @@ public class TowerSpawner : MonoBehaviour
 
         Debug.Log("Range Upgrades List Length: " + topPathUpgradeSteps.Count);
         Debug.Log("Speed Upgrades List Length: " + bottomPathUpgradeSteps.Count);
+        
+        uIUpdate = GetComponent<StatsUpdateFactory>();
+        
+        updateUIStats();
     }
 
     void Update()
@@ -132,6 +138,7 @@ public class TowerSpawner : MonoBehaviour
                 ApplyUpgrade(topPathUpgradeSteps[topPathUpgrades]);
                 topPathUpgrades++;
                 CheckBlockingCondition();
+                updateUIStats();
                 Debug.Log("Top path upgraded to level " + topPathUpgrades);
             }
             else
@@ -154,6 +161,7 @@ public class TowerSpawner : MonoBehaviour
                 ApplyUpgrade(bottomPathUpgradeSteps[bottomPathUpgrades]);
                 bottomPathUpgrades++;
                 CheckBlockingCondition();
+                updateUIStats();
                 Debug.Log("Bottom path upgraded to level " + bottomPathUpgrades);
             }
             else
@@ -257,10 +265,10 @@ public class TowerSpawner : MonoBehaviour
         Debug.Log("Top Path upgrades: " + topPathUpgrades + "/" + maxUpgrades);
         Debug.Log("Bottom Path upgrades: " + bottomPathUpgrades + "/" + maxUpgrades);
     }
-    
-    public void sellTower()
+
+    public void updateUIStats()
     {
-        gameManager.GetComponent<Money>().IncreaseCash(towerCost); 
-        Destroy(this.gameObject);
+        uIUpdate.UpdateSpawnTime(unitSpawnList[1].spawnInterval);
+        uIUpdate.UpdateSpawnTime(unitSpawnList[1].unitPrefab.GetComponent<Unit>().unitHealth);
     }
 }

@@ -23,7 +23,7 @@ public class TowerExplosive : MonoBehaviour
     public int towerCost;
 
     private TowerAttackExplosion towerAttack;
-    private GameObject gameManager;
+    private UIStatsUpdate uiUpdate;
 
     private int topPathUpgrades = 0;
     private int bottomPathUpgrades = 0;
@@ -37,8 +37,6 @@ public class TowerExplosive : MonoBehaviour
     {
         towerAttack = GetComponent<TowerAttackExplosion>();
         maxHealth = healthPoints;
-        
-        gameManager = GameObject.FindWithTag("GameManager");
 
         foreach (UpgradeStep step in topPathUpgradeSteps)
         {
@@ -78,6 +76,10 @@ public class TowerExplosive : MonoBehaviour
 
         Debug.Log("Range Upgrades List Length: " + topPathUpgradeSteps.Count);
         Debug.Log("Speed Upgrades List Length: " + bottomPathUpgradeSteps.Count);
+        
+        uiUpdate=GetComponent<UIStatsUpdate>();
+        
+        UpdateStats();
     }
 
     void Update()
@@ -104,6 +106,7 @@ public class TowerExplosive : MonoBehaviour
                 ApplyUpgrade(topPathUpgradeSteps[topPathUpgrades]);
                 topPathUpgrades++;
                 CheckBlockingCondition();
+                UpdateStats();
                 Debug.Log("Range upgraded to level " + topPathUpgrades);
 
             }
@@ -127,6 +130,7 @@ public class TowerExplosive : MonoBehaviour
                 ApplyUpgrade(bottomPathUpgradeSteps[bottomPathUpgrades]);
                 bottomPathUpgrades++;
                 CheckBlockingCondition();
+                UpdateStats();
                 Debug.Log("Speed upgraded to level " + bottomPathUpgrades);
             }
             else
@@ -224,13 +228,12 @@ public class TowerExplosive : MonoBehaviour
         Debug.Log("Top Path upgrades: " + topPathUpgrades + "/" + maxUpgrades);
         Debug.Log("Bottom Path upgrades: " + bottomPathUpgrades + "/" + maxUpgrades);
     }
-    
-    public void sellTower()
+
+    private void UpdateStats()
     {
-        gameManager.GetComponent<Money>().IncreaseCash(towerCost); 
-        if(this.transform.parent.gameObject.CompareTag("Tower"))
-            Destroy(this.transform.parent.gameObject);
-        else
-            Destroy(this.gameObject);
+        TowerAttackExplosion towerStats = GetComponent<TowerAttackExplosion>();
+        uiUpdate.UpdateDamageText(towerStats.towerDamage);
+        uiUpdate.UpdateAtkSpeedText(towerStats.fireCooldown);
+        uiUpdate.UpdateRangeText(towerStats.attackRange);
     }
 }
