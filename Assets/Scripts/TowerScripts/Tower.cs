@@ -6,6 +6,7 @@ using UnityEngine.UI;
 [System.Serializable]
 public class UpgradeStep
 {
+    public int cost;
     public float rangeIncrease;
     public float speedDecrease;
     public int healthIncrease;
@@ -24,6 +25,7 @@ public class Tower : MonoBehaviour
 
     private TowerAttack towerAttack;
     private UIStatsUpdate uiUpdate;
+    private Money money;
 
     private int topPathUpgrades = 0;
     private int bottomPathUpgrades = 0;
@@ -37,6 +39,7 @@ public class Tower : MonoBehaviour
     {
         towerAttack = GetComponent<TowerAttack>();
         maxHealth = healthPoints;
+        money = GameObject.Find("GameManager").GetComponent<Money>();
 
         foreach (UpgradeStep step in topPathUpgradeSteps)
         {
@@ -80,6 +83,8 @@ public class Tower : MonoBehaviour
         uiUpdate = GetComponent<UIStatsUpdate>();
         
         UpdateStats();
+        uiUpdate.UpdateBottomCost(bottomPathUpgradeSteps[0].cost);
+        uiUpdate.UpdateTopCost(topPathUpgradeSteps[0].cost);
     }
 
     void Update()
@@ -101,9 +106,12 @@ public class Tower : MonoBehaviour
     {
         if (CanUpgradeTopPath())
         {
-            if (topPathUpgrades < topPathUpgradeSteps.Count)
+            UpgradeStep currentStep = topPathUpgradeSteps[topPathUpgrades];
+            
+            if (topPathUpgrades < topPathUpgradeSteps.Count && currentStep.cost <= money.currentCash)
             {
-                ApplyUpgrade(topPathUpgradeSteps[topPathUpgrades]);
+                ApplyUpgrade(currentStep);
+                PayForUpgradesTop(topPathUpgradeSteps);
                 topPathUpgrades++;
                 CheckBlockingCondition();
                 UpdateStats();
@@ -125,9 +133,12 @@ public class Tower : MonoBehaviour
     {
         if (CanUpgradeBottomPath())
         {
-            if (bottomPathUpgrades < bottomPathUpgradeSteps.Count)
+            UpgradeStep currentStep = bottomPathUpgradeSteps[bottomPathUpgrades];
+            
+            if (bottomPathUpgrades < bottomPathUpgradeSteps.Count && currentStep.cost <= money.currentCash)
             {
-                ApplyUpgrade(bottomPathUpgradeSteps[bottomPathUpgrades]);
+                ApplyUpgrade(currentStep);
+                PayForUpgradesBottom(bottomPathUpgradeSteps);
                 bottomPathUpgrades++;
                 CheckBlockingCondition();
                 UpdateStats();
@@ -237,6 +248,46 @@ public class Tower : MonoBehaviour
             uiUpdate.UpdateDamageText(towerStats.towerDamage);
             uiUpdate.UpdateAtkSpeedText(towerStats.fireCooldown);
             uiUpdate.UpdateRangeText(towerStats.attackRange);
+        }
+    }
+
+    private void PayForUpgradesTop(List<UpgradeStep> upgradeStep)
+    {
+        int cost = upgradeStep[topPathUpgrades].cost;
+        money.DeductCash(cost);
+        double addCost = cost * 0.5;
+        towerCost += (int)addCost;
+        if (uiUpdate != null)
+        {
+            if (topPathUpgrades + 1 < topPathUpgradeSteps.Count)
+                uiUpdate.UpdateTopCost(upgradeStep[topPathUpgrades + 1].cost);
+            else
+            {
+                uiUpdate.BottomCostMax();
+                uiUpdate.TopCostMax();
+            }
+
+            GetComponent<Selling>().updateCost();
+        }
+    }
+    
+    private void PayForUpgradesBottom(List<UpgradeStep> upgradeStep)
+    {
+        int cost = upgradeStep[bottomPathUpgrades].cost;
+        money.DeductCash(cost);
+        double addCost = cost * 0.5;
+        towerCost += (int)addCost;
+        if (uiUpdate != null)
+        {
+            if (bottomPathUpgrades + 1 < bottomPathUpgradeSteps.Count)
+                uiUpdate.UpdateBottomCost(upgradeStep[bottomPathUpgrades + 1].cost);
+            else
+            {
+                uiUpdate.BottomCostMax();
+                uiUpdate.TopCostMax();
+            }
+
+            GetComponent<Selling>().updateCost();
         }
     }
 }

@@ -7,6 +7,7 @@ using UnityEngine.UI;
 [System.Serializable]
 public class UpgradeSpawnStep
 {
+    public int cost;
     public int healthIncrease;
     public float intervalDecrease;
     public List<GameObject> modelUpgrades;
@@ -31,7 +32,7 @@ public class TowerSpawner : MonoBehaviour
     public int towerCost;
     
     private GameObject gameManager;
-    private StatsUpdateFactory uIUpdate;
+    private UIStatsUpdateFactory uiUpdate;
 
     private int topPathUpgrades = 0;
     private int bottomPathUpgrades = 0;
@@ -78,9 +79,11 @@ public class TowerSpawner : MonoBehaviour
         Debug.Log("Range Upgrades List Length: " + topPathUpgradeSteps.Count);
         Debug.Log("Speed Upgrades List Length: " + bottomPathUpgradeSteps.Count);
         
-        uIUpdate = GetComponent<StatsUpdateFactory>();
+        uiUpdate = GetComponent<UIStatsUpdateFactory>();
         
-        updateUIStats();
+        UpdateUIStats();
+        uiUpdate.UpdateTopCost(topPathUpgradeSteps[0].cost);
+        uiUpdate.UpdateBottomCost(bottomPathUpgradeSteps[0].cost);
     }
 
     void Update()
@@ -133,12 +136,13 @@ public class TowerSpawner : MonoBehaviour
     {
         if (CanUpgradeTopPath())
         {
-            if (topPathUpgrades < topPathUpgradeSteps.Count)
+            if (topPathUpgrades < topPathUpgradeSteps.Count && topPathUpgradeSteps[topPathUpgrades].cost < gameManager.GetComponent<Money>().currentCash)
             {
                 ApplyUpgrade(topPathUpgradeSteps[topPathUpgrades]);
+                PayForUpgradesTop(topPathUpgradeSteps);
                 topPathUpgrades++;
                 CheckBlockingCondition();
-                updateUIStats();
+                UpdateUIStats();
                 Debug.Log("Top path upgraded to level " + topPathUpgrades);
             }
             else
@@ -156,12 +160,13 @@ public class TowerSpawner : MonoBehaviour
     {
         if (CanUpgradeBottomPath())
         {
-            if (bottomPathUpgrades < bottomPathUpgradeSteps.Count)
+            if (bottomPathUpgrades < bottomPathUpgradeSteps.Count && bottomPathUpgradeSteps[bottomPathUpgrades].cost <= gameManager.GetComponent<Money>().currentCash)
             {
                 ApplyUpgrade(bottomPathUpgradeSteps[bottomPathUpgrades]);
+                PayForUpgradesBottom(bottomPathUpgradeSteps);
                 bottomPathUpgrades++;
                 CheckBlockingCondition();
-                updateUIStats();
+                UpdateUIStats();
                 Debug.Log("Bottom path upgraded to level " + bottomPathUpgrades);
             }
             else
@@ -266,9 +271,49 @@ public class TowerSpawner : MonoBehaviour
         Debug.Log("Bottom Path upgrades: " + bottomPathUpgrades + "/" + maxUpgrades);
     }
 
-    public void updateUIStats()
+    public void UpdateUIStats()
     {
-        uIUpdate.UpdateSpawnTime(unitSpawnList[1].spawnInterval);
-        uIUpdate.UpdateSpawnTime(unitSpawnList[1].unitPrefab.GetComponent<Unit>().unitHealth);
+        uiUpdate.UpdateSpawnTime(unitSpawnList[0].spawnInterval);
+        uiUpdate.UpdateSpawnTime(unitSpawnList[0].unitPrefab.GetComponent<Unit>().unitHealth);
+    }
+    
+    private void PayForUpgradesTop(List<UpgradeSpawnStep> upgradeStep)
+    {
+        int cost = upgradeStep[topPathUpgrades].cost;
+        gameManager.GetComponent<Money>().DeductCash(cost);
+        double addCost = cost * 0.5;
+        towerCost += (int)addCost;
+        if (uiUpdate != null)
+        {
+            if (topPathUpgrades + 1 < topPathUpgradeSteps.Count)
+                uiUpdate.UpdateTopCost(upgradeStep[topPathUpgrades + 1].cost);
+            else
+            {
+                uiUpdate.BottomCostMax();
+                uiUpdate.TopCostMax();
+            }
+
+            GetComponent<SellingSpawner>().updateCost();
+        }
+    }
+    
+    private void PayForUpgradesBottom(List<UpgradeSpawnStep> upgradeStep)
+    {
+        int cost = upgradeStep[bottomPathUpgrades].cost;
+        gameManager.GetComponent<Money>().DeductCash(cost);
+        double addCost = cost * 0.5;
+        towerCost += (int)addCost;
+        if (uiUpdate != null)
+        {
+            if (bottomPathUpgrades + 1 < bottomPathUpgradeSteps.Count)
+                uiUpdate.UpdateBottomCost(upgradeStep[bottomPathUpgrades + 1].cost);
+            else
+            {
+                uiUpdate.BottomCostMax();
+                uiUpdate.TopCostMax();
+            }
+
+            GetComponent<Selling>().updateCost();
+        }
     }
 }
