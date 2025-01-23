@@ -18119,6 +18119,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 400000
+  publicCurrentHealth: 0
   healthSlider: {fileID: 7460234716592962184}
   reward: 950000
 --- !u!65 &8989854713466050215
@@ -18154,6 +18155,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ef3d207b5db4554f81270797a509d31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  turrets: []
+  attackRange: 15
+  rotationSpeed: 2
+  areaAttackRadius: 10
+  areaAttackDamage: 30
+  smokeShellRadius: 10
+  turretRangeReduction: 5
+  waypointsParent: {fileID: 309980458346511911, guid: 201852103d1c39743bf6bdf47b82fadf, type: 3}
+  moveSpeed: 5
   bossTheme: {fileID: 8300000, guid: c2e5a29ba2a8d434a8f60fb7d33846e4, type: 3}
 --- !u!1 &3232495998813016117
 GameObject:
@@ -18631,6 +18641,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 400000
+  publicCurrentHealth: 0
   healthSlider: {fileID: 0}
   reward: 950000
 --- !u!1 &3287957358541595130
