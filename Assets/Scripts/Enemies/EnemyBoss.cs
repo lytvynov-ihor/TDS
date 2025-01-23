@@ -23,14 +23,6 @@ public class EnemyBoss : MonoBehaviour
             }
         }
 
-
-        //
-        //
-        //TO DO: actually make Boss use Special Attacks and not what it is using right now
-        //
-        //
-
-
         private void Fire(Transform target)
         {
             if (target != null)
@@ -61,11 +53,25 @@ public class EnemyBoss : MonoBehaviour
     public float moveSpeed = 5f;
 
     public AudioClip bossTheme;
+    public AudioClip victoryTheme;
 
     private List<Transform> targetsInRange = new List<Transform>();
+    private EnemyHealth enemyHealth;
+    private Transform targetBase;
 
     void Start()
     {
+        GameObject baseObject = GameObject.FindGameObjectWithTag("Base");
+        if (baseObject != null)
+        {
+            targetBase = baseObject.transform;
+        }
+        else
+        {
+            Debug.LogError("No object with the 'Base' tag found.");
+        }
+
+        enemyHealth = GetComponent<EnemyHealth>();
         if (bossTheme != null)
         {
             AudioManager.Instance.PlayClip(bossTheme);
@@ -94,15 +100,28 @@ public class EnemyBoss : MonoBehaviour
 
     void moveWaypoints()
     {
-        if (waypoints.Count == 0 || currentWaypointIndex >= waypoints.Count) return;
-
-        Transform targetWaypoint = waypoints[currentWaypointIndex];
-        Vector3 direction = (targetWaypoint.position - transform.position).normalized;
-        transform.position += direction * moveSpeed * Time.deltaTime;
-
-        if (Vector3.Distance(transform.position, targetWaypoint.position) < 0.5f)
+        if (currentWaypointIndex < waypoints.Count)
         {
-            currentWaypointIndex++;
+            Transform targetWaypoint = waypoints[currentWaypointIndex];
+
+            Vector3 direction = (targetWaypoint.position - transform.position).normalized;
+            Quaternion targetRotation = Quaternion.LookRotation(direction);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+
+            transform.position = Vector3.MoveTowards(transform.position, targetWaypoint.position, moveSpeed * Time.deltaTime);
+
+            if (Vector3.Distance(transform.position, targetWaypoint.position) < 0.1f)
+            {
+                currentWaypointIndex++;
+            }
+        }
+        else if (targetBase != null)
+        {
+            Vector3 direction = (targetBase.position - transform.position).normalized;
+            Quaternion targetRotation = Quaternion.LookRotation(direction);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+
+            transform.position = Vector3.MoveTowards(transform.position, targetBase.position, moveSpeed * Time.deltaTime);
         }
     }
 
@@ -211,6 +230,23 @@ public class EnemyBoss : MonoBehaviour
         }
     }
 
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Base")
+        {
+            BaseHealth baseHealth = other.gameObject.GetComponent<BaseHealth>();
+            if (baseHealth != null)
+            {
+                baseHealth.TakeDamage(enemyHealth.publicCurrentHealth);
+            }
+            else
+            {
+                Debug.LogError("Base object does not have a BaseHealth component attached.");
+            }
+            Destroy(gameObject);
+        }
+    }
+
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
@@ -222,4 +258,9 @@ public class EnemyBoss : MonoBehaviour
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, smokeShellRadius);
     }
+
+   // private void OnDestroy()
+    //{
+    //    AudioManager.Instance.PlayClip(victoryTheme);
+    //}
 }

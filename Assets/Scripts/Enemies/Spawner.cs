@@ -17,6 +17,7 @@ public class Spawner : MonoBehaviour
     public float spawnInterval = 1f;
 
     public GameObject startWaveButton;
+    public GameObject victoriousScreen; // The GameObject to enable when all waves are complete
     public GameObject player;
     private GameObject[] cashFarms;
     public AdvisorScript advisor; // Reference to the Advisor script
@@ -24,11 +25,15 @@ public class Spawner : MonoBehaviour
     private int currentWaveIndex = -1;
     private int enemiesRemaining = 0;
     private bool isWaveActive = false;
+    public AudioClip victoryTheme;
 
     void Start()
     {
         if (startWaveButton != null)
             startWaveButton.SetActive(true);
+
+        if (victoriousScreen != null)
+            victoriousScreen.SetActive(false); // Ensure it's disabled at the start
     }
 
     void StartWave()
@@ -67,10 +72,29 @@ public class Spawner : MonoBehaviour
     public void EnemyDestroyed()
     {
         enemiesRemaining--;
+
+        // Check if all enemies and waves are done
         if (enemiesRemaining <= 0)
         {
             isWaveActive = false;
-            ShowStartWaveButtonIfPlayerAlive();
+            if (currentWaveIndex >= waves.Length - 1) // If last wave is finished
+            {
+                CheckVictoryCondition();
+            }
+            else
+            {
+                ShowStartWaveButtonIfPlayerAlive();
+            }
+        }
+    }
+
+    void CheckVictoryCondition()
+    {
+        if (victoriousScreen != null && !isWaveActive && enemiesRemaining <= 0)
+        {
+            victoriousScreen.SetActive(true); // Enable the victorious screen
+            AudioManager.Instance.PlayClip(victoryTheme);
+            Debug.Log("Victory! All waves and enemies are complete.");
         }
     }
 
@@ -85,6 +109,7 @@ public class Spawner : MonoBehaviour
             {
                 if (startWaveButton != null)
                     startWaveButton.SetActive(true);
+
                 if (cashFarms.Length != 0)
                 {
                     for (int i = 0; i < cashFarms.Length; i++)
