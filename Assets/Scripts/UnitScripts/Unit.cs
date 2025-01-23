@@ -94,10 +94,9 @@ public class Unit : MonoBehaviour
         if (other.gameObject.tag == "Enemy")
         {
             EnemyHealth enemyHealth = other.gameObject.GetComponent<EnemyHealth>();
-            Enemy enemyStuff = other.gameObject.GetComponent<Enemy>();
             if (enemyHealth != null)
             {
-                TakeDamage(enemyStuff.damageToUnits);
+                TakeDamage(enemyHealth.publicCurrentHealth);
                 enemyHealth.TakeDamage(currentHealth);
             }
             else

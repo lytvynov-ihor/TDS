@@ -5,8 +5,6 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     public float movementSpeed = 5f;
-    public int damageToBase = 10;
-    public int damageToUnits = 5;
     public float attackRange = 3f;
 
     public Transform path;
@@ -15,9 +13,11 @@ public class Enemy : MonoBehaviour
     private Transform targetBase;
     private Money money;
     public float rotationSpeed = 5f;
+    private EnemyHealth enemyHealth;
 
     void Start()
     {
+        enemyHealth = GetComponent<EnemyHealth>();
         money = GameObject.FindWithTag("GameManager").GetComponent<Money>();
 
         if (path != null)
@@ -92,7 +92,7 @@ public class Enemy : MonoBehaviour
             BaseHealth baseHealth = other.gameObject.GetComponent<BaseHealth>();
             if (baseHealth != null)
             {
-                baseHealth.TakeDamage(damageToBase);
+                baseHealth.TakeDamage(enemyHealth.publicCurrentHealth);
             }
             else
             {

@@ -313,7 +313,7 @@ public class TowerSpawner : MonoBehaviour
                 uiUpdate.TopCostMax();
             }
 
-            GetComponent<Selling>().updateCost();
+            GetComponent<SellingSpawner>().updateCost();
         }
     }
 }

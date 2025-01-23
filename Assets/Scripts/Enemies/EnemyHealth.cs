@@ -7,6 +7,7 @@ public class EnemyHealth : MonoBehaviour
 {
     [SerializeField] public int maxHealth = 100;
     private float currentHealth;
+    public int publicCurrentHealth;
     public Slider healthSlider;
     public int reward = 25;
 
@@ -21,6 +22,7 @@ public class EnemyHealth : MonoBehaviour
 
     private void Update()
     {
+        publicCurrentHealth = (int)currentHealth;
         float normalizedHealth = currentHealth / maxHealth;
         healthSlider.value = normalizedHealth;
     }

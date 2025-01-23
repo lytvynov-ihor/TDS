@@ -55,8 +55,8 @@ public class VehicleTurret : MonoBehaviour
         direction.y = 0;
         Quaternion targetRotation = Quaternion.LookRotation(direction);
 
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-        transform.localEulerAngles = new Vector3(0, 0, transform.localEulerAngles.z);
+        Quaternion smoothedRotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+        transform.rotation = Quaternion.Euler(0, smoothedRotation.eulerAngles.y, 0); // Only Y-axis rotates
     }
 
     void FireBeam()
