@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,9 @@ using UnityEngine.UI;
 
 public class TowerAttackExplosion : MonoBehaviour
 {
+    [SerializeField] AudioClip fireSound;
+    private new GameObject camera;
+    
     public Transform firePoint;
     public float attackRange = 20f;
     public float rotationSpeed = 5f;
@@ -21,6 +25,7 @@ public class TowerAttackExplosion : MonoBehaviour
 
     void Start()
     {
+        camera = GameObject.Find("Main Camera");
         startRotation = transform.rotation; // Initial rotation of the tower
         fireTimer = fireCooldown;
         InvokeRepeating("UpdateTarget", 0f, 0.05f); // Update the target every N seconds
@@ -90,6 +95,9 @@ public class TowerAttackExplosion : MonoBehaviour
 
     void FireProjectile()
     {
+        if(Camera.main!=null)
+            AudioSource.PlayClipAtPoint(fireSound, Camera.main.transform.position, 0.4f);
+        
         GameObject control = new GameObject("Control");
         GameObject enemyPos = new GameObject("EnemyPos");
         enemyPos.transform.position = target.transform.position;

@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class ProjectileShell : MonoBehaviour
 {
+    [SerializeField] AudioClip explosionAudioClip;
+    GameObject camera;
+
     public QuadraticCurve curve;
     public int attackDamage;
     public float speed;
@@ -13,6 +16,7 @@ public class ProjectileShell : MonoBehaviour
 
     void Start()
     {
+        camera = GameObject.Find("Main Camera");
         sampleTime = 0f;
     }
 
@@ -21,6 +25,7 @@ public class ProjectileShell : MonoBehaviour
         sampleTime += Time.deltaTime * speed;
         transform.position = curve.evaluate(sampleTime);
         transform.forward = curve.evaluate(sampleTime+0.001f) - transform.position;
+        transform.Rotate(transform.rotation.x,transform.rotation.y,sampleTime*145);
 
         if (sampleTime >= 0.5f)
         {
@@ -45,6 +50,8 @@ public class ProjectileShell : MonoBehaviour
                     }
                 }
             }
+            
+            AudioSource.PlayClipAtPoint(explosionAudioClip, camera.transform.position, 0.4f);
             Destroy(curve.GameObject());
             Destroy(curve.b.GameObject());
             Destroy(curve.control.GameObject());

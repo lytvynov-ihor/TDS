@@ -4222,6 +4222,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3341dc4631e495b4b9288598fe4ce0f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fireSound: {fileID: 8300000, guid: 80ae873ca1db65a4eb9ecfe0e5134be6, type: 3}
   firePoint: {fileID: 8810210211119543612}
   attackRange: 20
   rotationSpeed: 5
@@ -4231,7 +4232,7 @@ MonoBehaviour:
   rangeOfAttack: {fileID: 6540978099042548486}
   target: {fileID: 0}
   trajectory: {fileID: 5167915501607191101, guid: e22dd4a3ad72984488963e18471f8120, type: 3}
-  shell: {fileID: 1947514841053191502, guid: 653f2913743c5124abd4f4970a942011, type: 3}
+  shell: {fileID: 5996888906984413725, guid: fc92c3601bba7544ba48e3476465d6c2, type: 3}
 --- !u!114 &7365388354829366771
 MonoBehaviour:
   m_ObjectHideFlags: 0
