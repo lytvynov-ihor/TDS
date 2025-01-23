@@ -8,7 +8,6 @@ public class Enemy : MonoBehaviour
     public int damageToBase = 10;
     public int damageToUnits = 5;
     public float attackRange = 3f;
-    public int earnOnDeath = 5;
 
     public Transform path;
     private List<Transform> waypoints = new List<Transform>();
@@ -78,7 +77,6 @@ public class Enemy : MonoBehaviour
         }
         else if (targetBase != null)
         {
-            // Rotate and move toward the base
             Vector3 direction = (targetBase.position - transform.position).normalized;
             Quaternion targetRotation = Quaternion.LookRotation(direction);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
