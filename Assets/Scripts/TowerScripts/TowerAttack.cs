@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class TowerAttack : MonoBehaviour
 {
+    [SerializeField] private AudioClip shootingAudio;
+    
     public Transform firePoint;
     public float attackRange = 20f;
     public float rotationSpeed = 5f;
@@ -87,6 +89,9 @@ public class TowerAttack : MonoBehaviour
     
     void FireProjectile()
     {
+        if(Camera.main !=null)
+            AudioSource.PlayClipAtPoint(shootingAudio,Camera.main.transform.position, 0.10f);
+        
         RaycastHit hit;
         Vector3 forward = firePoint.TransformDirection(Vector3.forward) * attackRange;
         Debug.DrawRay(firePoint.position, forward, Color.red, 5.0f);
