@@ -92,7 +92,7 @@ public class Enemy : MonoBehaviour
             BaseHealth baseHealth = other.gameObject.GetComponent<BaseHealth>();
             if (baseHealth != null)
             {
-                baseHealth.TakeDamage(enemyHealth.publicCurrentHealth);
+                baseHealth.TakeDamage(enemyHealth.maxHealth/100);
             }
             else
             {

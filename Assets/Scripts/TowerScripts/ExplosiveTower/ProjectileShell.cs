@@ -35,7 +35,7 @@ public class ProjectileShell : MonoBehaviour
         if (sampleTime >= 1f)
         {
             Instantiate(particle, transform.position, Quaternion.identity);
-            Collider[] colliders = Physics.OverlapSphere(transform.position, 5f);
+            Collider[] colliders = Physics.OverlapSphere(transform.position, 8f);
             foreach (Collider c in colliders)
             {
                 if (c.CompareTag("Enemy"))

@@ -259,8 +259,12 @@ public class EnemyBoss : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, smokeShellRadius);
     }
 
-   // private void OnDestroy()
-    //{
-    //    AudioManager.Instance.PlayClip(victoryTheme);
-    //}
+    private void OnDestroy()
+    {
+        Spawner waveManager = FindObjectOfType<Spawner>();
+        if (waveManager != null)
+        {
+            waveManager.EnemyDestroyed();
+        }
+    }
 }

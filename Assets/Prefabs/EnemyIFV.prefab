@@ -931,7 +931,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletProof: 0
-  explosionProof: 0
+  explosionProof: 1
 --- !u!65 &3595848678747733760
 BoxCollider:
   m_ObjectHideFlags: 0

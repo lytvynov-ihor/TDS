@@ -4228,7 +4228,7 @@ MonoBehaviour:
   firePoint: {fileID: 8810210211119543612}
   attackRange: 20
   rotationSpeed: 5
-  fireCooldown: 2
+  fireCooldown: 3
   towerDamage: 50
   towerModel: {fileID: 602036706818725671}
   rangeOfAttack: {fileID: 6540978099042548486}
@@ -4253,23 +4253,23 @@ MonoBehaviour:
   towerName: Field Artillery
   towerCost: 300
   topPathUpgradeSteps:
-  - cost: 500
+  - cost: 200
     rangeIncrease: 15
-    speedDecrease: 1
+    speedDecrease: 0.5
     healthIncrease: 50
     damageIncrease: 20
     modelUpgrades:
     - {fileID: 7678405106061328044}
     modelToHide: []
-  - cost: 750
+  - cost: 450
     rangeIncrease: 0
-    speedDecrease: 1.5
+    speedDecrease: 0.5
     healthIncrease: 75
     damageIncrease: 0
     modelUpgrades:
     - {fileID: 808173041814971940}
     modelToHide: []
-  - cost: 1500
+  - cost: 900
     rangeIncrease: 0
     speedDecrease: 1
     healthIncrease: 150
@@ -4277,11 +4277,11 @@ MonoBehaviour:
     modelUpgrades:
     - {fileID: 4692205635478605308}
     modelToHide: []
-  - cost: 2200
+  - cost: 1500
     rangeIncrease: 10
-    speedDecrease: 1.5
+    speedDecrease: 0
     healthIncrease: 250
-    damageIncrease: 40
+    damageIncrease: 60
     modelUpgrades:
     - {fileID: 2080567485219710060}
     modelToHide: []
