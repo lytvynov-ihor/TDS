@@ -9,9 +9,14 @@ public class BaseHealth : MonoBehaviour
     public Text baseHealthText;
     public Slider healthSlider;//actually don't remove
     private float currentHealth; // Current health of the base
+    public AudioClip loseTheme;
+    public GameObject loseScreen;
 
     void Start()
     {
+        if (loseScreen != null)
+            loseScreen.SetActive(false);
+
         currentHealth = maxHealth;
     }
 
@@ -53,5 +58,11 @@ public class BaseHealth : MonoBehaviour
     public bool healthPositive()
     {
         return currentHealth > 0;
+    }
+
+    private void OnDestroy()
+    {
+        AudioManager.Instance.PlayClip(loseTheme);
+        loseScreen.SetActive(true);
     }
 }

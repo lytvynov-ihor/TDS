@@ -899,10 +899,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 413e51c3cdfa0754db410ee8867ccb03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 5
-  damageToBase: 90
-  damageToUnits: 5
-  attackRange: 3
+  movementSpeed: 4.5
   path: {fileID: 3201276993144035857, guid: 8e531f9d2dba88e4ea11b0e62449ccb6, type: 3}
   rotationSpeed: 5
 --- !u!114 &4751344289376551006
@@ -917,7 +914,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8db323f813f8904aa55008fa867d582, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 2250
+  maxHealth: 1750
+  publicCurrentHealth: 0
   healthSlider: {fileID: 8151677179028909428}
   reward: 575
 --- !u!114 &3961714179748145813
