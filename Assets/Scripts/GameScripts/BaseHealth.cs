@@ -45,6 +45,8 @@ public class BaseHealth : MonoBehaviour
         if(currentHealth <= 0)
         {
             Destroy(gameObject); // Destroy the base game object
+            AudioManager.Instance.PlayClip(loseTheme);
+            loseScreen.SetActive(true);
             // You can add additional functionality here such as game over state or effects
         }
        
@@ -60,9 +62,9 @@ public class BaseHealth : MonoBehaviour
         return currentHealth > 0;
     }
 
-    private void OnDestroy()
-    {
-        AudioManager.Instance.PlayClip(loseTheme);
-        loseScreen.SetActive(true);
-    }
+    //private void OnDestroy()
+    //{
+    //    AudioManager.Instance.PlayClip(loseTheme);
+    //    loseScreen.SetActive(true);
+    //}
 }
