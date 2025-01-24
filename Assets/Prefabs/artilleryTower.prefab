@@ -4224,6 +4224,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fireSound: {fileID: 8300000, guid: 80ae873ca1db65a4eb9ecfe0e5134be6, type: 3}
+  artillerySmoke: {fileID: 3564018784184052952, guid: 585c4b1beefa67140ad25e03b459e82c, type: 3}
   firePoint: {fileID: 8810210211119543612}
   attackRange: 20
   rotationSpeed: 5

@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class TowerAttack : MonoBehaviour
 {
     [SerializeField] private AudioClip shootingAudio;
+    [SerializeField] private ParticleSystem muzzleFlash;
     
     public Transform firePoint;
     public float attackRange = 20f;
@@ -25,6 +26,8 @@ public class TowerAttack : MonoBehaviour
         fireTimer = fireCooldown;
         InvokeRepeating("UpdateTarget", 0f, 0.001f);//update the target every N seconds 
         rangeOfAttack.localScale = new Vector3(attackRange * 10, attackRange * 10, 3f);
+
+        muzzleFlash.GetComponent<MuzzleTRX>().muzzle = firePoint;
     }
 
     void Update()
@@ -91,6 +94,8 @@ public class TowerAttack : MonoBehaviour
     {
         if(Camera.main !=null)
             AudioSource.PlayClipAtPoint(shootingAudio,Camera.main.transform.position, 0.10f);
+        
+        Instantiate(muzzleFlash, firePoint.position, Quaternion.identity);
         
         RaycastHit hit;
         Vector3 forward = firePoint.TransformDirection(Vector3.forward) * attackRange;

@@ -7941,6 +7941,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shootingAudio: {fileID: 8300000, guid: fc83505b890d36f40ad3f845702c0a5e, type: 3}
+  muzzleFlash: {fileID: 198234346748616026, guid: ad2ab49d0a2a17148bd51c93d977bdbc, type: 3}
   firePoint: {fileID: 9163221242801045641}
   attackRange: 10
   rotationSpeed: 5

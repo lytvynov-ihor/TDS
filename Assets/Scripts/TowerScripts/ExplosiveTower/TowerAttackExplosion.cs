@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class TowerAttackExplosion : MonoBehaviour
 {
     [SerializeField] AudioClip fireSound;
+    [SerializeField] ParticleSystem artillerySmoke;
     private new GameObject camera;
     
     public Transform firePoint;
@@ -97,6 +98,8 @@ public class TowerAttackExplosion : MonoBehaviour
     {
         if(Camera.main!=null)
             AudioSource.PlayClipAtPoint(fireSound, Camera.main.transform.position, 0.4f);
+        
+        Instantiate(artillerySmoke, firePoint.position, Quaternion.identity);
         
         GameObject control = new GameObject("Control");
         GameObject enemyPos = new GameObject("EnemyPos");
