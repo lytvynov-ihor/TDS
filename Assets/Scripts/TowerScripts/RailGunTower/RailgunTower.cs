@@ -227,7 +227,7 @@ public class RailgunTower : MonoBehaviour
 
     private void UpdateStats()
     {
-        TowerAttackExplosion towerStats = GetComponent<TowerAttackExplosion>();
+        RailgunTowerAttack towerStats = GetComponent<RailgunTowerAttack>();
         uiUpdate.UpdateDamageText(towerStats.towerDamage);
         uiUpdate.UpdateAtkSpeedText(towerStats.fireCooldown);
         uiUpdate.UpdateRangeText(towerStats.attackRange);
@@ -249,7 +249,7 @@ public class RailgunTower : MonoBehaviour
                 uiUpdate.TopCostMax();
             }
 
-            GetComponent<SellingExplosive>().updateCost();
+            GetComponent<SellTower>().updateCost();
         }
     }
 
@@ -269,7 +269,7 @@ public class RailgunTower : MonoBehaviour
                 uiUpdate.TopCostMax();
             }
 
-            GetComponent<SellingExplosive>().updateCost();
+            GetComponent<SellTower>().updateCost();
         }
     }
 }
