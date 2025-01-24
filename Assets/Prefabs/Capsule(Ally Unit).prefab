@@ -574,7 +574,7 @@ GameObject:
   - component: {fileID: 3506427596150164930}
   m_Layer: 0
   m_Name: Capsule(Ally Unit)
-  m_TagString: Ally
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -686,11 +686,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 5
-  damageToBase: 10
-  damageToUnits: 5
-  attackRange: 3
-  earnOnDeath: 5
   path: {fileID: 3201276993144035857, guid: 8e531f9d2dba88e4ea11b0e62449ccb6, type: 3}
+  rotationSpeed: 5
 --- !u!114 &-387994303953406600
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -704,6 +701,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
+  publicCurrentHealth: 0
   healthSlider: {fileID: 0}
   reward: 25
 --- !u!114 &3506427596150164930

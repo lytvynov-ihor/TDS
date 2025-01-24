@@ -5,7 +5,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     public float movementSpeed = 5f;
-    public float attackRange = 3f;
+    //public float attackRange = 3f;
 
     public Transform path;
     private List<Transform> waypoints = new List<Transform>();
