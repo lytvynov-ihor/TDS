@@ -18241,7 +18241,6 @@ MonoBehaviour:
   moveSpeed: 1.5
   bossTheme: {fileID: 8300000, guid: c2e5a29ba2a8d434a8f60fb7d33846e4, type: 3}
   victoryTheme: {fileID: 8300000, guid: 52d1f34ccc1d99c4b90178747ce9736c, type: 3}
-  victoriousScreen: {fileID: 2934383839795772795, guid: 65674fca249f77f46b065937cda588b0, type: 3}
 --- !u!114 &3051564733586604281
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18254,7 +18253,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0edd14aae4c996b4b9c28080adab516d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletProof: 0
+  bulletProof: 1
   explosionProof: 0
 --- !u!1 &3232495998813016117
 GameObject:
