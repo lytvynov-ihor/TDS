@@ -6,76 +6,92 @@ public class RailgunTowerAttack : MonoBehaviour
 {
     public Transform firePoint; // Where the laser originates
     public float attackRange = 20f; // Range of the tower
+    public float rotationSpeed = 5f; // Speed of rotation toward the target
     public float fireCooldown = 2f; // Time between attacks
     public int towerDamage = 50; // Damage dealt by the laser
     public LineRenderer laserBeam; // LineRenderer to visualize the laser
+    public GameObject towerModel; // The visual model of the tower
 
+    private Transform target; // Current target
+    private Quaternion startRotation; // Initial rotation of the tower
     private float fireTimer;
 
     void Start()
     {
         fireTimer = fireCooldown;
+        startRotation = transform.rotation; // Save the initial rotation
+        InvokeRepeating("UpdateTarget", 0f, 0.1f); // Update target every 0.1 seconds
     }
 
     void Update()
     {
         fireTimer += Time.deltaTime;
 
-        if (fireTimer >= fireCooldown)
+        if (target != null)
         {
-            TargetAndShoot();
-            fireTimer = 0f;
+            RotateTowardsEnemy(); // Rotate toward the target
+
+            // Fire laser if cooldown is complete
+            if (fireTimer >= fireCooldown)
+            {
+                FireLaser(target);
+                fireTimer = 0f;
+            }
+        }
+        else
+        {
+            // Reset rotation to its initial state if no target
+            transform.rotation = Quaternion.Slerp(transform.rotation, startRotation, Time.deltaTime * rotationSpeed);
         }
     }
 
-    void TargetAndShoot()
+    void UpdateTarget()
     {
         // Find all objects within range
         Collider[] objectsInRange = Physics.OverlapSphere(transform.position, attackRange);
 
         // Filter for enemies by tag
-        List<Transform> enemiesInRange = new List<Transform>();
+        float shortestDistance = Mathf.Infinity;
+        Transform nearestEnemy = null;
+
         foreach (Collider obj in objectsInRange)
         {
             if (obj.CompareTag("Enemy"))
             {
-                enemiesInRange.Add(obj.transform);
+                float distanceToEnemy = Vector3.Distance(transform.position, obj.transform.position);
+                if (distanceToEnemy < shortestDistance)
+                {
+                    shortestDistance = distanceToEnemy;
+                    nearestEnemy = obj.transform;
+                }
             }
         }
 
-        // If no enemies are in range, return
-        if (enemiesInRange.Count == 0)
-        {
-            return;
-        }
-
-        // Find the closest enemy
-        Transform closestEnemy = FindClosestEnemy(enemiesInRange);
-
-        // Fire the laser at the closest enemy
-        if (closestEnemy != null)
-        {
-            FireLaser(closestEnemy);
-        }
+        // Set the closest enemy as the target
+        target = nearestEnemy;
     }
 
-    Transform FindClosestEnemy(List<Transform> enemies)
+    void RotateTowardsEnemy()
     {
-        Transform closestEnemy = null;
-        float shortestDistance = Mathf.Infinity;
+        if (target == null) return;
 
-        foreach (Transform enemy in enemies)
+        // Calculate direction to the target
+        Vector3 direction = (target.position - transform.position).normalized;
+
+        // Apply rotation offset if needed (example: adjust 90 degrees if the model is misaligned)
+        Quaternion lookRotation = Quaternion.LookRotation(direction) * Quaternion.Euler(0f, 90f, 0f);
+
+        // Smoothly rotate the tower's base toward the target
+        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
+
+        // If the tower model rotates independently (e.g., a turret), adjust this too
+        if (towerModel != null)
         {
-            float distance = Vector3.Distance(transform.position, enemy.position);
-            if (distance < shortestDistance)
-            {
-                shortestDistance = distance;
-                closestEnemy = enemy;
-            }
+            towerModel.transform.rotation = Quaternion.Slerp(towerModel.transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
         }
-
-        return closestEnemy;
     }
+
+
 
     void FireLaser(Transform target)
     {
